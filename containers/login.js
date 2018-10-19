@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, TextInput, Button } from 'react-native';
-import { graphql, Mutation } from 'react-apollo';
+import { View, TextInput, Button, ImageBackground } from 'react-native';
+import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
-
+import style from './styles/login';
 
 const LOGIN = gql`
     mutation login($username: String!, $password: String!) {
         login(username: $username, password: $password) @client
     }
 `
+
 const Login = () => {
     let username = React.createRef();
     let password = React.createRef();
@@ -17,15 +18,15 @@ const Login = () => {
     <Mutation mutation={LOGIN}>
         {
             login => (
-                <View>
+                <ImageBackground source={require('../assets/login.jpg')} style={style.login}>
                     <TextInput
-                        style={{height: 40, width: 200, borderWidth: 1}}
+                        style={style.textInput}
                         onChangeText={(text) => username.value = text}
                         value={username.value}
                         ref={usernameRef => username = usernameRef}
                     />
                     <TextInput
-                        style={{height: 40, width: 200, borderWidth: 1}}
+                        style={style.textInput}
                         onChangeText={(text) => password.value = text}
                         value={password.value}
                         ref={passwordRef => password = passwordRef}
@@ -41,7 +42,7 @@ const Login = () => {
                         color="#841584"
                         accessibilityLabel="Learn more about this purple button"
                     />
-                </View>
+                </ImageBackground>
             )
         }
     </Mutation>
