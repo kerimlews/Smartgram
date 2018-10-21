@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ApolloClient, { gql } from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
-import Home from './containers/home';
-import Login from './containers/login';
+import Home from 'containers/home';
+import Login from 'containers/login';
 
-const client = new ApolloClient({ uri: 'https://localhost:4000',
+const client = new ApolloClient({ uri: 'http://192.168.0.22:4000',
   clientState: {
     defaults: {
       isAuth: false,
