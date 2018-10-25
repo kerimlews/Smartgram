@@ -5,7 +5,7 @@ import { ApolloProvider, Query } from 'react-apollo';
 import Home from 'containers/home';
 import Login from 'containers/login';
 
-const client = new ApolloClient({ uri: 'http://192.168.0.22:4000',
+const client = new ApolloClient({ uri: 'http://192.168.0.45:4000',
   clientState: {
     defaults: {
       isAuth: false,
@@ -32,14 +32,9 @@ const App = () => (
     <Query query={IS_AUTH}>
     {
       ({ data: { isAuth } }) => (
-        <View style={styles.container}>
-          {
-            isAuth ?
-              <Home />
-              :
-              <Login />
-          }
-        </View>
+          isAuth
+           ? <Home />
+           : <Login style={styles.container}/>
       )
     }
     </Query>
