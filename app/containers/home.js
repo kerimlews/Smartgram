@@ -1,35 +1,49 @@
 import React from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
-import { ApolloConsumer } from 'react-apollo';
+import { View, Text } from 'react-native';
+import { Query } from 'react-apollo';
 import Button from 'components/Button';
+import Error from 'components/Error';
+import gql from 'graphql-tag';
 import style from './styles/login';
+import { asyncRemoveToken } from './utils/util';
 
-function signOut(writeData) {
+async function signOut(client) {
     try {
-        AsyncStorage.setItem('token', null)
-        writeData({ data: { isAuth: false } });
+        await asyncRemoveToken();
+        await client.writeData({ data: { isAuth: false } });
     } catch(ex) {
-        console.log('Error sign out ', ex);
+        console.log('Error while trying delete token', ex)
     }
 }
 
+const USER = gql`
+    {
+        username @client
+        email @client
+        token @client
+    }
+`;
+
 const Home = () => (
-    <ApolloConsumer>
+    <Query query={USER}>
         {
-            ({ writeData }) => (
+            ({ loading, error, data, client }) => (
                 <View>
+                    { loading && <Text>Loading</Text>}
+                    { error && <Error error={error} />}
                     <Text>
-                        Home
+                        {data.username}
+                        {data.email}
                     </Text>
                     <Button
                         style={style.loginBtn}
-                        onPress={() => signOut(writeData)}
+                        onPress={() => signOut(client)}
                         text="Sign out"
                     />
                 </View>
             )
         }
-    </ApolloConsumer>
-)
+    </Query>
+);
 
-export default Home
+export default Home;

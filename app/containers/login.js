@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, TextInput, ImageBackground, Text, AsyncStorage } from 'react-native';
+import { View, TextInput, ImageBackground, Text } from 'react-native';
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import Button from 'components/Button';
 import Error from 'components/Error';
 import style from './styles/login';
+import { asyncSetToken } from './utils/util';
 
 const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
@@ -38,29 +39,25 @@ export default class Login extends Component {
     login = (cache, { data: { login } }) => this.saveToken(cache, login)
     registration = (cache, { data: { registration } }) => this.saveToken(cache, registration)
 
-    saveToken = async (cache, data) => {
+    async saveToken (cache, requestData) {
         try {
-            await AsyncStorage.setItem('token', data.token)
-            cache.writeData({ data: { ...data, isAuth: true } });
+            const data = { ...requestData, isAuth: true }
+            await cache.writeData({ data });
+            await asyncSetToken(requestData.token);
         } catch(ex) {
-            this.setState({ error: {
-                graphQLErrors: [{ message: 'An unexpected error try restart application' }]
-            } })
+            console.log('Try restar app' ,ex)
         }
     }
 
     render() {
         const { username, password, email, confirmPassword, error } = this.state;
         return (
-            <Mutation
-                mutation={LOGIN}
-                update={this.login}
-            >
-                {(login, { data: dataLogin, error: errorLogin, loading: loginLoading }) => (
-            <Mutation mutation={REGISTRATION}>
-                {(registration, { data: dataRegist, error: errorRegist, loading: registrerLoading }) => (
+            <Mutation mutation={LOGIN} update={this.login}>
+                {(login, { error: errorLogin, loading: loginLoading }) => (
+            <Mutation mutation={REGISTRATION} update={this.registration}>
+                {(registration, { error: errorRegist, loading: registrerLoading }) => (
             <Mutation mutation={LOGIN}>
-                {(connectWithFacebook, { data: dataFb, error: errorFb, loading: loadingFb }) => {
+                {(connectWithFacebook, { error: errorFb, loading: loadingFb }) => {
                     
                     if (loadingFb || loginLoading || registrerLoading) 
                         return <Text>LOADING ...............</Text>
