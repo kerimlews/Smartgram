@@ -4,12 +4,21 @@ import ApolloClient, { gql } from 'apollo-boost';
 import { ApolloProvider, Query } from 'react-apollo';
 import Home from 'containers/home';
 import Login from 'containers/login';
+import { Font } from 'expo';
 
-const client = new ApolloClient({ uri: 'http://10.45.166.59:4000',
+async function loadFont() {
+  await Font.loadAsync({
+      'ubuntu': require('./assets/fonts/Ubuntu-Regular.ttf'),
+  });
+}
+
+
+const client = new ApolloClient({ uri: 'http://10.45.166.62:4000',
   clientState: {
     defaults: {
       isAuth: false,
-      name: 'KERIM'
+      name: 'KERIM',
+      async loadFont()
     },
     resolvers: {
       Mutation: {
@@ -28,18 +37,19 @@ const IS_AUTH = gql`
 `
 
 const App = () => (
-  <ApolloProvider client={client} >
+  <ApolloProvider client={client}>
     <Query query={IS_AUTH}>
     {
-      ({ data: { isAuth } }) => (
+      ({ data: { isAuth } } => (
           isAuth
            ? <Home />
-           : <Login style={styles.container}/>
+           : <Login style={styles.container} />
       )
     }
     </Query>
   </ApolloProvider>
-);
+)
+};
 
 const styles = StyleSheet.create({
   container: {

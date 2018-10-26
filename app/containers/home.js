@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Query } from 'react-apollo';
+import { View } from 'react-native';
+import { ApolloConsumer } from 'react-apollo';
+import { gql } from 'apollo-boost'
 import Button from 'components/Button';
 import Navigation from 'components/Navigation';
 import Content from 'components/Content';
@@ -27,21 +28,21 @@ const USER = gql`
 
 const Home = () => (
     <ApolloConsumer>
-        {
-            client => (
-                <View style={style.home}>
-                    <Navigation />
-                    <Content />
-                    <Stores />
-                    <Button
-                        style={style.loginBtn}
-                        onPress={() => signOut(client)}
-                        text="Sign out"
-                    />
-                </View>
-            )
-        }
-    </Query>
+    {
+        client => (
+            <View style={style.home}>
+                <Navigation />
+                <Content />
+                <Stores />
+                <Button
+                    style={style.loginBtn}
+                    onPress={() => signOut(client)}
+                    text="Sign out"
+                />
+            </View>
+        )
+    }
+    </ApolloConsumer>
 );
 
 export default Home;

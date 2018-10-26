@@ -6,7 +6,8 @@ export default StyleSheet.create({
         height: '100%',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        fontFamily: 'ubuntu'
     },
     textInput: {
         width: '70%',
@@ -19,7 +20,6 @@ export default StyleSheet.create({
         padding: 15,
         borderWidth: 1,
         borderColor: '#f7f7f7',
-        borderRadius: 3,
         margin: 4
     },
     btnGroup: {
