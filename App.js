@@ -32,14 +32,9 @@ const App = () => (
     <Query query={IS_AUTH}>
     {
       ({ data: { isAuth } }) => (
-        <View style={styles.container}>
-          {
-            isAuth ?
-              <Home />
-              :
-              <Login />
-          }
-        </View>
+          isAuth
+           ? <Home />
+           : <Login style={styles.container}/>
       )
     }
     </Query>
