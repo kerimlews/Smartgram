@@ -58,8 +58,8 @@ export default class Login extends Component {
                 {(registration, { error: errorRegist, loading: registrerLoading }) => (
             <Mutation mutation={LOGIN}>
                 {(connectWithFacebook, { error: errorFb, loading: loadingFb }) => {
-                    
-                    if (loadingFb || loginLoading || registrerLoading) 
+
+                    if (loadingFb || loginLoading || registrerLoading)
                         return <Text>LOADING ...............</Text>
                     return (
 
@@ -109,11 +109,11 @@ export default class Login extends Component {
                     </ImageBackground>
 
             )}}
-            </Mutation> 
+            </Mutation>
             )}
-            </Mutation> 
+            </Mutation>
             )}
-            </Mutation>         
+            </Mutation>
         )
     }
 }

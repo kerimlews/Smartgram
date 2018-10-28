@@ -8,10 +8,11 @@ export async function asyncRemoveToken() {
     }
 }
 
-export async function asyncSetToken(token) {
+async function signOut(writeData) {
     try {
-        await AsyncStorage.setItem('token', token)
+        await AsyncStorage.removeItem('token')
+        writeData({ data: { isAuth: false } });
     } catch(ex) {
-        console.log('Error while deleteing token', ex)
+        console.log('Error sign out ', ex);
     }
 }

@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    content: {
-        backgroundColor: 'red',
-        height: 500
-    }
+  home: {
+    
+  }
 })
