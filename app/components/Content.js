@@ -5,6 +5,8 @@ import gql from 'graphql-tag';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import style from './styles/content';
 
+import Settings from './ContentComponents/settings';
+
 const ACTIVE_TAB = gql`
   {
     navigation @client {
@@ -51,7 +53,7 @@ const Content = () => (
               { activeTab === 1 &&  <Text>BOOK</Text>}
               { activeTab === 2 &&  <Text>MESSAGE</Text>}
               { activeTab === 3 &&  <Text>NOTICE</Text>}
-              { activeTab === 4 &&  <Text>SETTINGS</Text>}
+              { activeTab === 4 &&  <Settings />}
           </View>
         </Swipeable>
       );

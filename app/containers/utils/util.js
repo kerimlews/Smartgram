@@ -8,10 +8,10 @@ export async function asyncRemoveToken() {
     }
 }
 
-async function signOut(writeData) {
+export async function signOut(client) {
     try {
         await AsyncStorage.removeItem('token')
-        writeData({ data: { isAuth: false } });
+        client.writeData({ data: { isAuth: false } });
     } catch(ex) {
         console.log('Error sign out ', ex);
     }

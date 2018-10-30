@@ -36,6 +36,7 @@ class App extends Component {
     this.setState({ loadingToken: true })
     try {
       const token = await AsyncStorage.getItem('token');
+      console.log(token);
       this.setState({ token, loadingToken: false })
      } catch (error) {
        this.setState({ token: null, loadingToken: false, errorToken: error })
