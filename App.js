@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
-import { gql } from 'apollo-boost';
+import { StyleSheet, Text, View } from 'react-native';
+import gql from 'graphql-tag';
 import { ApolloProvider, Query } from 'react-apollo';
 import Home from 'containers/home';
 import Login from 'containers/login';
@@ -13,59 +13,48 @@ const IS_AUTH = gql`
   }
 `
 const CHECK_TOKEN = gql`
-  query checkToken($token: String) {
-    checkToken(token: $token)
+  {
+    checkToken
   }
 `
 
 class App extends Component {
   state = {
-    token: null,
-    loadingToken: false,
-    errorToken: null
+    loadingFont: true
   }
 
   componentWillMount() {
-    this.fetchToken();
-    Font.loadAsync({
-        'ubuntu': require('./assets/fonts/Ubuntu-Regular.ttf'),
-    });
+    this.loadFont();
   }
 
-  fetchToken = async () => {
-    this.setState({ loadingToken: true })
-    try {
-      const token = await AsyncStorage.getItem('token');
-      console.log(token);
-      this.setState({ token, loadingToken: false })
-     } catch (error) {
-       this.setState({ token: null, loadingToken: false, errorToken: error })
-     }
+  loadFont = async () => {
+    await Font.loadAsync({'ubuntu': require('./assets/fonts/Ubuntu-Regular.ttf')});
+    await this.setState({ loadingFont: false });
   }
 
   render() {
-    const { loadingToken, errorToken, token } = this.state;
-
+    const { loadingFont } = this.state;
     return (
       <ApolloProvider client={client}>
-       {
-         <Query query={CHECK_TOKEN} variables={{ token }} >
-          {
-            ({ data: { checkToken }, error, loading }) => {
-              if (loading || loadingToken)
+         <Query query={CHECK_TOKEN}>
+          {({ data, error, loading, client }) => {
+              if (loading || loadingFont)
                 return <Text>LOADINGGGG</Text>
+
+              const isAuth = data ? data.checkToken : false;
+              client.writeData({ data: { isAuth } })
+              var auth = client.readQuery({ query: gql`{ isAuth @client }` });
               return (
-                checkToken
+                auth.isAuth
                  ? <Home style={{ fontFamily: 'ubuntu' }}/>
                  : <Login style={styles.container} />
-            )}
-          }
+            )}}
           </Query>
-       }
       </ApolloProvider>
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

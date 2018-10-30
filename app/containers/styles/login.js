@@ -6,11 +6,11 @@ export default StyleSheet.create({
         height: '100%',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: 'ubuntu'
+        justifyContent: 'center'
     },
     textInput: {
         width: '70%',
+        fontFamily: 'ubuntu',
         margin: 5,
         padding: 5,
         borderBottomColor: 'white',
