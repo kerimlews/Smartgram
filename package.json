@@ -9,9 +9,17 @@
     "eject": "expo eject"
   },
   "dependencies": {
+<<<<<<< HEAD
     "apollo-boost": "^0.1.16",
     "apollo-cache-inmemory": "^1.3.8",
     "apollo-link-context": "^1.0.9",
+=======
+    "apollo-cache-inmemory": "^1.3.7",
+    "apollo-client": "^2.4.4",
+    "apollo-link": "^1.2.3",
+    "apollo-link-context": "^1.0.9",
+    "apollo-link-error": "^1.1.1",
+>>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
     "apollo-link-http": "^1.5.5",
     "apollo-link-state": "^0.4.2",
     "expo": "^30.0.1",
