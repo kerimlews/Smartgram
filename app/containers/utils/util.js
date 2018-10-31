@@ -11,10 +11,10 @@ export async function saveToken (cache, requestData) {
     }
 }
 
-export async function signOut(client) {
+export async function signIn(client, data) {
     try {
-        await AsyncStorage.removeItem('token')
-        client.writeData({ data: { isAuth: false } });
+        await AsyncStorage.setItem('token', data.token);
+        await client.writeData({ data: { ...data, isAuth: true } });
     } catch(ex) {
         console.log('Error sign out ', ex);
     }

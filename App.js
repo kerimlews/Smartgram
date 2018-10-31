@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
-import { gql } from 'apollo-boost';
+import { StyleSheet, Text, View } from 'react-native';
+import gql from 'graphql-tag';
 import { ApolloProvider, Query } from 'react-apollo';
 import Home from 'containers/home';
 import Login from 'containers/login';
@@ -34,8 +34,12 @@ class App extends Component {
             ({ data: { checkToken }, error, loading }) => {
               if (loading)
                 return <Text>LOADINGGGG</Text>
+
+              const isAuth = data ? data.checkToken : false;
+              client.writeData({ data: { isAuth } })
+              var auth = client.readQuery({ query: gql`{ isAuth @client }` });
               return (
-                checkToken
+                auth.isAuth
                  ? <Home style={{ fontFamily: 'ubuntu' }}/>
                  : <Login style={styles.container} />
             )}}
@@ -44,6 +48,7 @@ class App extends Component {
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

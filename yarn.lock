@@ -536,6 +536,7 @@ apollo-cache-inmemory@^1.3.7:
   dependencies:
     apollo-cache "^1.1.19"
     apollo-utilities "^1.0.24"
+<<<<<<< HEAD
     optimism "^0.6.6"
 
 <<<<<<< HEAD
@@ -573,6 +574,19 @@ apollo-client@^2.4.4:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.4.4.tgz#b96d4fc2dd856b24552bb2e2da466219b0d4eb1f"
 >>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
+=======
+    optimism "^0.6.6"
+
+apollo-cache@1.1.19, apollo-cache@^1.1.19:
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.1.19.tgz#a9ff2b6c70ab888c29ea038d8642b5698f115a3a"
+  dependencies:
+    apollo-utilities "^1.0.24"
+
+apollo-client@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.4.4.tgz#b96d4fc2dd856b24552bb2e2da466219b0d4eb1f"
+>>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
   dependencies:
     "@types/zen-observable" "^0.8.0"
     apollo-cache "1.1.19"
@@ -589,12 +603,15 @@ apollo-link-context@^1.0.9:
   resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.9.tgz#7fbc034de44546e957a840be76b2f6277c785e8f"
   dependencies:
     apollo-link "^1.2.3"
+<<<<<<< HEAD
 
 apollo-link-context@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.9.tgz#7fbc034de44546e957a840be76b2f6277c785e8f"
   dependencies:
     apollo-link "^1.2.3"
+=======
+>>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
 
 apollo-link-dedup@^1.0.0:
   version "1.0.10"
@@ -615,7 +632,11 @@ apollo-link-http-common@^0.2.5:
     apollo-link "^1.2.3"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 apollo-link-http@^1.3.1, apollo-link-http@^1.5.5:
+=======
+apollo-link-http@^1.5.5:
+>>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
 =======
 apollo-link-http@^1.5.5:
 >>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
@@ -626,7 +647,11 @@ apollo-link-http@^1.5.5:
     apollo-link-http-common "^0.2.5"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 apollo-link-state@^0.4.0, apollo-link-state@^0.4.2:
+=======
+apollo-link-state@^0.4.2:
+>>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a
 =======
 apollo-link-state@^0.4.2:
 >>>>>>> f2a010d0cd0af3a2f82d89b03b7f29f1d25a355a

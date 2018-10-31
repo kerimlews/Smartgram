@@ -10,6 +10,7 @@ export default StyleSheet.create({
     },
     textInput: {
         width: '70%',
+        fontFamily: 'ubuntu',
         margin: 5,
         padding: 5,
         borderBottomColor: 'white',

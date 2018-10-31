@@ -5,8 +5,6 @@ import { HttpLink } from 'apollo-link-http';
 import { AsyncStorage } from 'react-native';
 import { withClientState } from 'apollo-link-state';
 
-import { navigation } from './stores/navigation';
-
 const cache = new InMemoryCache({
   addTypename: false
 });

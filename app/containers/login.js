@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, ImageBackground, Text } from 'react-native';
 import { Mutation } from 'react-apollo';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 import Button from 'components/Button';
 import Error from 'components/Error';
 import style from './styles/login';
