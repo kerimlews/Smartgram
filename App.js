@@ -13,55 +13,33 @@ const IS_AUTH = gql`
   }
 `
 const CHECK_TOKEN = gql`
-  query checkToken($token: String) {
-    checkToken(token: $token)
+  {
+    checkToken
   }
 `
 
 class App extends Component {
-  state = {
-    token: null,
-    loadingToken: false,
-    errorToken: null
-  }
 
   componentWillMount() {
-    this.fetchToken();
     Font.loadAsync({
         'ubuntu': require('./assets/fonts/Ubuntu-Regular.ttf'),
     });
   }
 
-  fetchToken = async () => {
-    this.setState({ loadingToken: true })
-    try {
-      const token = await AsyncStorage.getItem('token');
-      console.log(token);
-      this.setState({ token, loadingToken: false })
-     } catch (error) {
-       this.setState({ token: null, loadingToken: false, errorToken: error })
-     }
-  }
-
   render() {
-    const { loadingToken, errorToken, token } = this.state;
-
     return (
       <ApolloProvider client={client}>
-       {
-         <Query query={CHECK_TOKEN} variables={{ token }} >
+        <Query query={CHECK_TOKEN}>
           {
             ({ data: { checkToken }, error, loading }) => {
-              if (loading || loadingToken)
+              if (loading)
                 return <Text>LOADINGGGG</Text>
               return (
                 checkToken
                  ? <Home style={{ fontFamily: 'ubuntu' }}/>
                  : <Login style={styles.container} />
-            )}
-          }
+            )}}
           </Query>
-       }
       </ApolloProvider>
     )
   }

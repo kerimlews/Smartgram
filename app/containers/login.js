@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 import Button from 'components/Button';
 import Error from 'components/Error';
 import style from './styles/login';
-import { asyncSetToken } from './utils/util';
+import { saveToken } from './utils/util';
 
 const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
@@ -36,18 +36,8 @@ export default class Login extends Component {
         error: null
     }
 
-    login = (cache, { data: { login } }) => this.saveToken(cache, login)
-    registration = (cache, { data: { registration } }) => this.saveToken(cache, registration)
-
-    async saveToken (cache, requestData) {
-        try {
-            const data = { ...requestData, isAuth: true }
-            await cache.writeData({ data });
-            await asyncSetToken(requestData.token);
-        } catch(ex) {
-            console.log('Try restar app' ,ex)
-        }
-    }
+    login = (cache, { data: { login } }) => saveToken(cache, login)
+    registration = (cache, { data: { registration } }) => saveToken(cache, registration)
 
     render() {
         const { username, password, email, confirmPassword, error } = this.state;
