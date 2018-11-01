@@ -29,14 +29,18 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <Query query={CHECK_TOKEN}>
-        {({ data: { checkToken }, error, loading: loadingCheck }) => (
+        <Query query={CHECK_TOKEN} >
+        {({ data: { checkToken }, error, loading: loadingCheck, client }) => {
+          if (loadingCheck)
+          return <Text>LOADINGGGG</Text>
+
+          return (
         <Query query={IS_AUTH}>
         {({ data: { isAuth }, error, loading }) => {
 
-            if (loading || loadingCheck)
+            if (loading)
               return <Text>LOADINGGGG</Text>
-            
+            console.log(checkToken, isAuth)
             return (
               checkToken && isAuth
                ? <Home style={{ fontFamily: 'ubuntu' }}/>
@@ -44,7 +48,7 @@ class App extends Component {
 
                
         }}</Query>
-        )}</Query>
+        )}}</Query>
       </ApolloProvider>
     )
   }
