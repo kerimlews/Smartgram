@@ -27,6 +27,7 @@ const Navigation = () => (
   {({ data: { navigation: { activeTab } }, error, loading, client }) => {
     if (loading)
       return <Text>loading navigation</Text>
+
     return (
         // ADD ANIMATIONS
           <View style={style.nav}>

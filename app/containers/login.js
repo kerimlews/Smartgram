@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import Button from 'components/Button';
 import Error from 'components/Error';
 import style from './styles/login';
-import { saveToken } from './utils/util';
+import { signIn } from './utils/util';
 
 const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
@@ -36,8 +36,8 @@ export default class Login extends Component {
         error: null
     }
 
-    login = (cache, { data: { login } }) => saveToken(cache, login)
-    registration = (cache, { data: { registration } }) => saveToken(cache, registration)
+    login = (cache, { data: { login } }) => signIn(cache, login)
+    registration = (cache, { data: { registration } }) => signIn(cache, registration)
 
     render() {
         const { username, password, email, confirmPassword, error } = this.state;

@@ -16,10 +16,10 @@ const ACTIVE_TAB = gql`
 `
 
 function swipe(activeTab, client, type) {
-  console.log(activeTab, client, type)
+  // console.log(activeTab, client, type)
 
   const query = {}
-  console.log(query)
+ //console.log(query)
   switch (type) {
     case 'LEFT':
       activeTab = activeTab === 0 ? activeTab : activeTab - 1;

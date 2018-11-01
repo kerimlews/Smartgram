@@ -30,20 +30,21 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <Query query={CHECK_TOKEN}>
-          {
-            ({ data: { checkToken }, error, loading }) => {
-              if (loading)
-                return <Text>LOADINGGGG</Text>
+        {({ data: { checkToken }, error, loading: loadingCheck }) => (
+        <Query query={IS_AUTH}>
+        {({ data: { isAuth }, error, loading }) => {
 
-              const isAuth = data ? data.checkToken : false;
-              client.writeData({ data: { isAuth } })
-              var auth = client.readQuery({ query: gql`{ isAuth @client }` });
-              return (
-                auth.isAuth
-                 ? <Home style={{ fontFamily: 'ubuntu' }}/>
-                 : <Login style={styles.container} />
-            )}}
-          </Query>
+            if (loading || loadingCheck)
+              return <Text>LOADINGGGG</Text>
+            
+            return (
+              checkToken && isAuth
+               ? <Home style={{ fontFamily: 'ubuntu' }}/>
+               : <Login style={styles.container} /> );
+
+               
+        }}</Query>
+        )}</Query>
       </ApolloProvider>
     )
   }
