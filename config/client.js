@@ -21,7 +21,7 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const httpLink = new HttpLink({ uri: 'http://10.45.166.62:4000'});
+const httpLink = new HttpLink({ uri: 'http://192.168.0.14:4000'});
  // add client initial state
 const clientState = withClientState({
   cache,

@@ -41,20 +41,13 @@ const Content = () => (
       if (error)
         console.log(error);
       return (
-        <ScrollView
-          horizontal={true}
-          onScrollBeginDrag={(event) => console.log(event)}
-        >
-          <View style={style.content} >
+          <View style={style.content} onMoveShouldSetResponderCapture={ (evt) => console.log(evt) } >
               { activeTab === 0 &&  <Home />}
               { activeTab === 1 &&  <Book />}
               { activeTab === 2 &&  <Messages />}
               { activeTab === 3 &&  <Notice />}
               { activeTab === 4 &&  <Settings />}
-            </View>
-            <View stlye={style.content} >
-            </View>
-        </ScrollView>
+          </View>
       );
     }
   }
