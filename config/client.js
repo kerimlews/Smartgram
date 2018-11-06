@@ -26,7 +26,6 @@ const httpLink = new HttpLink({ uri: 'http://10.45.166.62:4000'});
 const clientState = withClientState({
   cache,
   defaults: {
-    isAuth: true,
     navigation
   }
 })

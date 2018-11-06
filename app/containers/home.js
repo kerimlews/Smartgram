@@ -7,6 +7,7 @@ import Stores from 'components/Stores';
 
 import style from './styles/home';
 
+
 const Home = () => (
   <View style={style.home}>
       <Navigation />

@@ -2,10 +2,10 @@ import { AsyncStorage } from 'react-native';
 
 export async function signIn(client, requestData) {
     try {
-        console.log(client == null);
         const data = { ...requestData, isAuth: true }
-        await AsyncStorage.setItem('token', requestData.token);
+        console.log(data);
         await client.writeData({ data });
+        await AsyncStorage.setItem('token', requestData.token);
     } catch(ex) {
         console.log('Try while saving token try restart app' ,ex)
     }
@@ -13,7 +13,6 @@ export async function signIn(client, requestData) {
 
 export async function signOut(client) {
     try {
-        //console.log(client)
         await AsyncStorage.removeItem('token');
         await client.writeData({ data: { isAuth: false } });
     } catch(ex) {
