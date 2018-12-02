@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { Query } from 'react-apollo';
+import { View, Text, PanResponder } from 'react-native';
+import { Query, withApollo  } from 'react-apollo';
 import gql from 'graphql-tag';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import style from './styles/content';
-import GestureRecognizer, { swipeDirections } from 'containers/utils/gesture-recognizer';
 
 import Settings from './ContentComponents/settings';
 import Book from './ContentComponents/book';
@@ -19,39 +17,52 @@ const ACTIVE_TAB = gql`
     }
   }
 `
+class Content extends Component {
+  constructor(props) {
+      super(props)
+      const { client } = this.props;
 
-function onSwipe(event, activeTab, client) {
-    console.log(event);
+      this._panResponder = PanResponder.create({
+        onMoveShouldSetResponderCapture: () => true,
+        onMoveShouldSetPanResponderCapture: () => true,
 
-      //  activeTab = activeTab === 0 ? 0 : activeTab + 1;
+       onPanResponderMove:  (e, { dx }) => {
+        console.log(client.readQuery({ query: ACTIVE_TAB }))
+       //  const activeTab = client.readQuery({ ACTIVE_TAB });
+         /*console.log(activeTab);
+          if(dx < 0)
+            client.writeData({ data: { navigation: { activeTab: activeTab + 1 , __typename: 'navigation' } } })
+          if(dx > 0)
+            client.writeData({ data: { navigation: { activeTab: activeTab - 1 , __typename: 'navigation' } } })
+        */
+          }
+    })
+  }
 
-      //  activeTab = activeTab === 4 ? 4 : activeTab - 1;
+  render() {
+    return (
+      <Query query={ACTIVE_TAB}>
+      {({ data: { navigation: { activeTab }, error, loading, client }}) => {
+          ///console.log(client);
 
-
+          if(loading)
+            return <Text>loadingggggg</Text>
+          if (error)
+            console.log(error);
+          return (
+              <View style={style.content} {...this._panResponder.panHandlers} >
+                  { activeTab === 0 &&  <Home />}
+                  { activeTab === 1 &&  <Book />}
+                  { activeTab === 2 &&  <Messages />}
+                  { activeTab === 3 &&  <Notice />}
+                  { activeTab === 4 &&  <Settings />}
+              </View>
+          );
+        }
+      }
+      </Query>
+    );
+  };
 }
 
-// ADD SIGN OUT TO SETTTINGS MAKE FLATLIST
-const Content = () => (
-  <Query query={ACTIVE_TAB}>
-  {({ data: { navigation: { activeTab }, error, loading, client }}) => {
-      ///console.log(client);
-
-      if(loading)
-        return <Text>loadingggggg</Text>
-      if (error)
-        console.log(error);
-      return (
-          <View style={style.content} onMoveShouldSetResponderCapture={ (evt) => console.log(evt) } >
-              { activeTab === 0 &&  <Home />}
-              { activeTab === 1 &&  <Book />}
-              { activeTab === 2 &&  <Messages />}
-              { activeTab === 3 &&  <Notice />}
-              { activeTab === 4 &&  <Settings />}
-          </View>
-      );
-    }
-  }
-  </Query>
-);
-
-export default Content;
+export default withApollo(Content);

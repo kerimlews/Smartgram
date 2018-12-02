@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     login: {
         width: '100%',
-        height: '500px',
+        height: '100%',
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
