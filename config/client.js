@@ -5,12 +5,9 @@ import { HttpLink } from 'apollo-link-http';
 import { AsyncStorage } from 'react-native';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
-import { RedisPubSub } from 'graphql-redis-subscriptions';
-
 import { navigation } from './stores/navigation';
 
 const cache = new InMemoryCache({ addTypename: false });
-const pubsub = new RedisPubSub();
 
 const authMiddleware = setContext(async (req, { headers }) => {
   const token = await AsyncStorage.getItem('token');
@@ -23,7 +20,7 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const httpLink = new HttpLink({ uri: 'http://192.168.1.11:4000'});
+const httpLink = new HttpLink({ uri: 'http://10.45.166.65:4000'});
  // add client initial state
 const clientState = withClientState({
   cache,
@@ -33,6 +30,6 @@ const clientState = withClientState({
 })
 
 export default new ApolloClient({
-  link: ApolloLink.from([ authMiddleware, httpLink, clientState, pubsub ]),
+  link: ApolloLink.from([ authMiddleware, httpLink, clientState ]),
   cache
 })

@@ -23,13 +23,16 @@
     "expo": "^30.0.1",
     "expo-cli": "^2.7.0",
     "graphql": "^14.0.2",
-    "graphql-redis-subscriptions": "^2.0.0",
     "graphql-subscriptions": "^1.0.0",
     "graphql-tag": "^2.10.0",
     "hyperapp": "^1.2.9",
-    "react": "16.5.0",
+    "react": "^16.8.0-alpha.1",
     "react-apollo": "^2.2.4",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-router-flux": "3.38.0"
+    "react-dom": "^16.8.0-alpha.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31-with-hooks-dangerzone.tar.gz",
+    "react-native-router-flux": "^4.0.6",
+    "react-test-renderer": "^16.8.0-alpha.1",
+    "schedule": "0.4.0",
+    "util": "^0.11.1"
   }
 }
