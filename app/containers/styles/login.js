@@ -28,7 +28,8 @@ export default StyleSheet.create({
     topLeftCorner: {
         backgroundColor: 'red',
         height: 200,
-        borderBottomRightRadius: 200
+        borderBottomRightRadius: 600,
+        width: '80%'
     },
     btnGroup: {
         flexDirection: 'column'
