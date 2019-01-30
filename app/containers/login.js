@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, ImageBackground, Text } from 'react-native';
-import { Mutation } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button from 'components/Button';
-import Error from 'components/Error';
+import { showMessage } from 'react-native-flash-message';
+import { LinearGradient } from 'expo';
 import style from './styles/login';
 import { signIn } from './utils/util';
 
@@ -26,84 +27,107 @@ const REGISTRATION = gql`
     }
 `
 
-export default class Login extends Component {
-    state = {
-        email: 'kerim1@gmail.com',
-        password: 'kerim1',
-        username: '',
-        confirmPassword: '',
-        loading: false,
-        error: null
-    }
+const loginUpdate = (cache, { data: { login } }) => signIn(cache, login)
+const registrationUpdate = (cache, { data: { registration } }) => signIn(cache, registration)
 
-    login = (cache, { data: { login } }) => signIn(cache, login)
-    registration = (cache, { data: { registration } }) => signIn(cache, registration)
+export default compose(
+    graphql(LOGIN,
+        {
+            name: 'login',
+            options: {
+                update: loginUpdate,
+                onError: () => showMessage({
+                    message: 'Error',
+                    type: 'danger'
+                })
+            }
+        }
+    ), 
+    graphql(REGISTRATION, { name: 'registration', options: { update: registrationUpdate } })
+)(Login);
 
-    render() {
-        const { username, password, email, confirmPassword, error } = this.state;
-        return (
-            <Mutation mutation={LOGIN} update={this.login}>
-                {(login, { error: errorLogin, loading: loginLoading }) => (
-            <Mutation mutation={REGISTRATION} update={this.registration}>
-                {(registration, { error: errorRegist, loading: registrerLoading }) => (
-            <Mutation mutation={LOGIN}>
-                {(connectWithFacebook, { error: errorFb, loading: loadingFb }) => {
+function Login({ login, registration }) {
+    const email = useFormInput('kerim1@gmail.com');
+    const password = useFormInput('kerim1');
+    const username = useFormInput('kerimlews');
+    const firstName = useFormInput('Kerim');
+    const lastName = useFormInput('Alihodza');
+    const confirmPassword = useFormInput('');
 
-                    if (loadingFb || loginLoading || registrerLoading)
-                        return <Text>LOADING ...............</Text>
-                    return (
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState(null);
 
-                    <ImageBackground source={require('../../assets/login.jpg')} style={style.login}>
-                        <Error
-                            errors={errorLogin || errorRegist || errorFb || error}
+    /*if (loading)
+        return <Text>Loading....</Text>*/
+
+    return (
+        <View>
+            <View style={style.topLeftCorner}>
+                <Text>Logo</Text>
+            </View>
+            <LinearGradient colors={['#e66465', '#9198e5']}  style={style.login}>
+                <TextInput
+                    {...email}
+                    placeholder="Email"
+                />
+                <TextInput
+                    {...username}
+                    placeholder="Username"
+                />
+                <TextInput
+                    {...password}
+                    placeholder="Password"
+                />
+                {/* <TextInput
+                    {...confirmPassword}
+                    placeholder="Confirm password"
+                />
+                <TextInput
+                    {...firstName}
+                    placeholder="First name"
+                />
+                <TextInput
+                    {...lastName}
+                    placeholder="Last name"
+                /> */}
+                <View style={style.btnGroup} >
+                    <View style={style.signBtn} >
+                        <Button
+                            onPress={() => {
+                                setLoading(true);
+                                login({ variables: { email: email.value, password: password.value }});
+                            }}
+                            text="Login"
+                            style={style.loginBtn}
                         />
-                        <TextInput
-                            style={style.textInput}
-                            onChangeText={(email) => this.setState({ email })}
-                            value={email}
-                            placeholder="Email"
-                            underlineColorAndroid="white"
+                        <Button
+                            onPress={() => {
+                                setLoading(true);
+                                registration({ variables: { email: email.value, username: username.value, password: password.value }})
+                            }}
+                            text="Sign in"
+                            style={style.loginBtn}
                         />
-                        <TextInput
-                            style={style.textInput}
-                            onChangeText={(username) => this.setState({ username })}
-                            value={username}
-                            placeholder="Username"
-                            underlineColorAndroid="white"
-                        />
-                        <TextInput
-                            style={style.textInput}
-                            onChangeText={(password) => this.setState({ password })}
-                            value={password}
-                            placeholder="Password"
-                        />
-                        <View style={style.btnGroup} >
-                            <View style={style.signBtn} >
-                                <Button
-                                    onPress={() => login({ variables: { email, password }})}
-                                    text="Login"
-                                    style={style.loginBtn}
-                                />
-                                <Button
-                                    onPress={() => registration({ variables: { email, username, password }})}
-                                    text="Sign in"
-                                    style={style.loginBtn}
-                                />
-                            </View>
-                            <Button
-                                onPress={() => connectWithFacebook({ variables: { username, password }})}
-                                text="Connect with facebook"
-                                style={style.loginBtn}
-                            />
-                        </View>
-                    </ImageBackground>
+                    </View>
+                    <Button
+                        onPress={() => null}
+                        text="Connect with facebook"
+                        style={style.loginBtn}
+                    />
+                </View>
+            </LinearGradient>
+            <View style={style.rightLeftCorner}></View>
+        </View>
+    )
+}
 
-            )}}
-            </Mutation>
-            )}
-            </Mutation>
-            )}
-            </Mutation>
-        )
-    }
+function useFormInput(defaultValue) {
+    const [ value, setValue ] = useState(defaultValue);
+
+    return {
+        value,
+        onChangeText: (e) => setValue(e),
+        style: style.textInput,
+        underlineColorAndroid: 'white'
+    };
 }

@@ -6,7 +6,9 @@ export default StyleSheet.create({
         height: '100%',
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderTopLeftRadius: 250,
+        borderBottomRightRadius: 200
     },
     textInput: {
         width: '70%',
@@ -22,6 +24,11 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: '#f7f7f7',
         margin: 4
+    },
+    topLeftCorner: {
+        backgroundColor: 'red',
+        height: 200,
+        borderBottomRightRadius: 200
     },
     btnGroup: {
         flexDirection: 'column'

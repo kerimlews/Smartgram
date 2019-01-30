@@ -15,26 +15,27 @@ const CHECK_TOKEN = gql`
   }
 `
 
-async function loadFont() {
-    await Font.loadAsync({
-        'ubuntu': require('../../assets/fonts/Ubuntu-Regular.ttf'),
-    });
-}
-
 export default function Provider({ children }) {
 
-    const { name , setname } = useState('');
+    const [ isLoadFont , setIsLoadFont ] = useState(true);
 
     useEffect(() => {
         loadFont();
-    });
+    }, [isLoadFont]);
+
+    async function loadFont() {
+        await Font.loadAsync({
+            'ubuntu': require('assets/fonts/Ubuntu-Regular.ttf'),
+        });
+        setIsLoadFont(false);
+    }
 
     return (
         <ApolloProvider client={client}>
             <Query query={CHECK_TOKEN}>
                 {
                     ({ data: { checkToken }, error, loading, client }) => {
-                        if (loading)
+                        if (loading || isLoadFont)
                             return <Text>LOADINGGGG</Text>;
                     
                         client.writeData({ data: { ...checkToken, isAuth: checkToken != null } });
@@ -43,5 +44,5 @@ export default function Provider({ children }) {
                 }}
             </Query>
         </ApolloProvider>
-    )
+    );
 }

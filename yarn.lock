@@ -5950,6 +5950,12 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-flash-message@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.10.tgz#aa1f4526cb798a2a1d2911c1c5143391c922ee0b"
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-gesture-handler@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.6.tgz#8a672ca0c7a1b706dffee4e230e5cf0197d2cdb8"

@@ -10,10 +10,11 @@ export default class Error extends Component {
         const { errors } = this.props;
         if (!errors)
             return null;
+            console.log(errors)
         return(
             <View style={{ backgroundColor: 'red', width: '100%' }}>
                 <Text style={{color: '#f7f7f7', opacity: 0.8}}>
-                    {errors && errors.graphQLErrors.map((e) => e.message || '')}
+                    {errors.length > 0 && errors.graphQLErrors.map((e) => e.message || '')}
                 </Text>
             </View>
         );

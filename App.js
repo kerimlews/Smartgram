@@ -1,10 +1,11 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import gql from 'graphql-tag';
 import Home from 'containers/home';
 import Login from 'containers/login';
 import ApolloProvider from 'containers/apollo-provider';
+import FlashMessage from 'react-native-flash-message';
 
 const IS_AUTH = gql`
   {
@@ -13,7 +14,6 @@ const IS_AUTH = gql`
 `
 const App = () => (
   <ApolloProvider>
-    <View>
     <Query query={IS_AUTH}>
       {
         ({ data: { isAuth }, error, loading }) => {
@@ -29,7 +29,7 @@ const App = () => (
         }
       }
     </Query>
-    </View>
+    <FlashMessage position="top" />
   </ApolloProvider>
 )
 
