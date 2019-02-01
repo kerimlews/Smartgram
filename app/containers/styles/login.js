@@ -2,13 +2,20 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     login: {
-        width: '100%',
-        height: '100%',
         flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'center'
+    },
+    linear: {  
         alignItems: 'center',
         justifyContent: 'center',
-        borderTopLeftRadius: 250,
-        borderBottomRightRadius: 200
+        zIndex: 10
+    },
+    header: {
+        alignSelf: 'center',
+        color: '#3d5169',
+        fontSize: 24,
+        lineWidth: 600
     },
     textInput: {
         width: '70%',
@@ -26,10 +33,20 @@ export default StyleSheet.create({
         margin: 4
     },
     topLeftCorner: {
-        backgroundColor: 'red',
-        height: 200,
-        borderBottomRightRadius: 600,
-        width: '80%'
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0
+    },
+    bottomRightCorner: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
+    },
+    shadowOffset: {
+      width: 0,
+      height: 3
     },
     btnGroup: {
         flexDirection: 'column'

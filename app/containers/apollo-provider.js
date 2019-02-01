@@ -1,7 +1,7 @@
 import { ApolloProvider, Query } from 'react-apollo';
 import React, { useEffect, useState } from 'react';
 import { Font } from 'expo';
-import { Text } from 'react-native';
+import { Text, Platform, StyleSheet } from 'react-native';
 import gql from 'graphql-tag';
 import client from 'config/client';
 
@@ -31,7 +31,7 @@ export default function Provider({ children }) {
     }
 
     return (
-        <ApolloProvider client={client}>
+        <ApolloProvider client={client} style={style.container}>
             <Query query={CHECK_TOKEN}>
                 {
                     ({ data: { checkToken }, error, loading, client }) => {
@@ -46,3 +46,9 @@ export default function Provider({ children }) {
         </ApolloProvider>
     );
 }
+
+style = StyleSheet.create({
+    container: {
+        marginTop: Platform.OS === 'ios' ? 0 : 25,
+    }
+})

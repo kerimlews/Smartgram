@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, ImageBackground, Text } from 'react-native';
+import React, { useState, Fragment } from 'react';
+import { View, TextInput, ImageBackground, Text, Image  } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button from 'components/Button';
@@ -47,6 +47,9 @@ export default compose(
 )(Login);
 
 function Login({ login, registration }) {
+    /*if (loading)
+        return <Text>Loading....</Text>*/
+    
     const email = useFormInput('kerim1@gmail.com');
     const password = useFormInput('kerim1');
     const username = useFormInput('kerimlews');
@@ -54,69 +57,70 @@ function Login({ login, registration }) {
     const lastName = useFormInput('Alihodza');
     const confirmPassword = useFormInput('');
 
+    const [ isLogin, setLogin ]  = useState(true);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(null);
 
-    /*if (loading)
-        return <Text>Loading....</Text>*/
+    function handleSubmitForm() {
+        setLoading(true);
+        if (isLogin) 
+            login({ variables: { email: email.value, password: password.value }});
+        else
+            registration({ variables: { email: email.value, username: username.value, password: password.value }});
+    }
 
     return (
-        <View>
+        <View style={style.login}>
             <View style={style.topLeftCorner}>
-                <Text>Logo</Text>
+                <ImageBackground source={require('assets/topLogin.png')}  style={{ width: '100%', height: 270 }}/>
             </View>
-            <LinearGradient colors={['#e66465', '#9198e5']}  style={style.login}>
+            <Text style={style.header}>{ isLogin ? 'Login' : 'Register' }</Text>
+            <View style={style.form}>
                 <TextInput
                     {...email}
                     placeholder="Email"
                 />
-                <TextInput
-                    {...username}
-                    placeholder="Username"
-                />
+                { !isLogin &&
+                    <Fragment>
+                        <TextInput
+                            {...username}
+                            placeholder="Username"
+                        />
+                        <TextInput
+                            {...firstName}
+                            placeholder="First name"
+                        />
+                        <TextInput
+                            {...lastName}
+                            placeholder="Last name"
+                        />
+                    </Fragment>
+                }
                 <TextInput
                     {...password}
                     placeholder="Password"
                 />
-                {/* <TextInput
-                    {...confirmPassword}
-                    placeholder="Confirm password"
-                />
-                <TextInput
-                    {...firstName}
-                    placeholder="First name"
-                />
-                <TextInput
-                    {...lastName}
-                    placeholder="Last name"
-                /> */}
-                <View style={style.btnGroup} >
-                    <View style={style.signBtn} >
-                        <Button
-                            onPress={() => {
-                                setLoading(true);
-                                login({ variables: { email: email.value, password: password.value }});
-                            }}
-                            text="Login"
-                            style={style.loginBtn}
-                        />
-                        <Button
-                            onPress={() => {
-                                setLoading(true);
-                                registration({ variables: { email: email.value, username: username.value, password: password.value }})
-                            }}
-                            text="Sign in"
-                            style={style.loginBtn}
-                        />
-                    </View>
-                    <Button
-                        onPress={() => null}
-                        text="Connect with facebook"
-                        style={style.loginBtn}
+                
+                { !isLogin &&
+                    <TextInput
+                        {...confirmPassword}
+                        placeholder="Confirm password"
                     />
-                </View>
-            </LinearGradient>
-            <View style={style.rightLeftCorner}></View>
+                 }
+                 <Button
+                    onPress={() => handleSubmitForm()}
+                    text={`${isLogin ? 'Login' : 'Sign in'}`}
+                    style={style.submitBtn}
+                />
+                <Button
+                    onPress={() => null}
+                    text="Connect with facebook"
+                    style={style.socialBtn}
+                />
+            </View>
+            <View style={style.bottomRightCorner}>
+                <ImageBackground source={require('assets/bottomLogin.png')} style={{ width: '100%', height: 260 }} />
+            </View>
         </View>
     )
 }
