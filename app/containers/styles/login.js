@@ -4,7 +4,9 @@ export default StyleSheet.create({
     login: {
         flex: 1,
         alignItems: 'flex-start',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#fdfdfe',
+        position: 'relative'
     },
     linear: {  
         alignItems: 'center',
@@ -12,25 +14,98 @@ export default StyleSheet.create({
         zIndex: 10
     },
     header: {
+        position: 'absolute',
+        top: '25%',
         alignSelf: 'center',
+        fontFamily: 'sans-serif',
         color: '#3d5169',
-        fontSize: 24,
-        lineWidth: 600
+        fontSize: 30,
+        fontWeight: '600'
+    },
+    forgot: {
+        color: '#cbd4de',
+        alignSelf: 'flex-end',
+        fontSize: 18,
+        marginRight: 40,
+        marginTop: 20,
+        fontWeight: '600'
+    },
+    form : {
+        backgroundColor: 'white',
+        width: '85%',
+        borderTopRightRadius: 100,
+        borderBottomRightRadius: 100,
+        elevation: 5,
+        height: 'auto',
+        position: 'relative',
+        shadowColor: '#d1d8e1',
+        shadowOffset: { width: 4, height: 4 },
+        shadowRadius: 10
+    },
+    toggleBtn: {
+        height: 50,
+        elevation: 1,
+        width: 140,
+        marginTop: 20,
+        borderTopRightRadius: 25,
+        borderBottomRightRadius: 25,
+        position: 'absolute',
+        justifyContent: 'center',
+        shadowColor: '#d1d8e1',
+        shadowOffset: { width: 4, height: 4 },
+        shadowRadius: 10
+    },
+    toggleText: {
+        color: '#f8785d',
+        fontWeight: '500',
+        fontSize: 20,
+        marginLeft: 20
+    },
+    submitBtn: {
+        width: 70,
+        height: 70,
+        borderRadius: 70,
+        position: 'absolute',
+        right: -25,
+        elevation: 5,
+        shadowColor: '#d1d8e1',
+        shadowOffset: { width: 4, height: 4 },
+        shadowRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        bottom: 30
+    },
+    bottomRightCorner: {
+        position: 'relative'
+    },
+    socialBtn: {
+        right: 8,
+        height: 60,
+        width: 60,
+        borderRadius: 60,
+        elevation: 5,
+        shadowColor: '#3B5998',
+        shadowOffset: { width: 4, height: 4 },
+        shadowRadius: 10,
+        alignItems: 'center',
+        position: 'absolute',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        fontSize: 26,
+        bottom: 16,
+        zIndex: 100,
+        flexDirection: 'row-reverse'
     },
     textInput: {
-        width: '70%',
+        width: '80%',
         fontFamily: 'ubuntu',
-        margin: 5,
-        padding: 5,
-        borderBottomColor: 'white',
-        fontFamily: 'ubuntu',
-        fontSize: 16
-    },
-    loginBtn: {
-        padding: 15,
-        borderWidth: 1,
-        borderColor: '#f7f7f7',
-        margin: 4
+        padding: 20,
+        borderBottomColor: '#f8fafb',
+        borderBottomWidth: 1,
+        margin: 0,
+        fontSize: 16,
+        color: '#8093ad'
     },
     topLeftCorner: {
         position: 'absolute',

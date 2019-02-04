@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, View, Text } from 'react-native';
+import { TouchableHighlight, View, Text, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo';
 
-export default class Button extends Component {
-    static propTypes = {
-        
-    }
-    render() {
-        return(
-            <TouchableHighlight onPress={this.props.onPress}>
-                <View style={this.props.style}>
-                    <Text style={{color: '#f7f7f7', opacity: 0.8}}>
-                        {this.props.text.toUpperCase()}
+export default function Button({ onPress, colors, style, styleText, text, icon }) {
+    return(
+        <TouchableHighlight onPress={onPress}>
+            { colors ?
+                <LinearGradient colors={colors} style={style} >
+                    {icon}
+                </LinearGradient>
+                :
+                <View style={style}>
+                    {icon}
+                    <Text style={styleText}>
+                        {text}
                     </Text>
                 </View>
-            </TouchableHighlight>
-        );
-    }
+            }
+        </TouchableHighlight>
+    );
 }
+
+const custom = StyleSheet.create({
+    text: {
+        color: 'white'
+    }
+})

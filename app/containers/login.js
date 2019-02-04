@@ -4,7 +4,7 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button from 'components/Button';
 import { showMessage } from 'react-native-flash-message';
-import { LinearGradient } from 'expo';
+import { Entypo, Feather } from '@expo/vector-icons';
 import style from './styles/login';
 import { signIn } from './utils/util';
 
@@ -69,12 +69,16 @@ function Login({ login, registration }) {
             registration({ variables: { email: email.value, username: username.value, password: password.value }});
     }
 
+    const icon = !isLogin
+        ? <Entypo name="check" size={32} color="white" />
+        : <Feather name="arrow-right" size={32} color="white" />;
+
     return (
         <View style={style.login}>
             <View style={style.topLeftCorner}>
                 <ImageBackground source={require('assets/topLogin.png')}  style={{ width: '100%', height: 270 }}/>
             </View>
-            <Text style={style.header}>{ isLogin ? 'Login' : 'Register' }</Text>
+            <Text style={style.header}>Smartgram</Text>
             <View style={style.form}>
                 <TextInput
                     {...email}
@@ -99,6 +103,7 @@ function Login({ login, registration }) {
                 <TextInput
                     {...password}
                     placeholder="Password"
+                    secureTextEntry
                 />
                 
                 { !isLogin &&
@@ -111,15 +116,31 @@ function Login({ login, registration }) {
                     onPress={() => handleSubmitForm()}
                     text={`${isLogin ? 'Login' : 'Sign in'}`}
                     style={style.submitBtn}
-                />
-                <Button
-                    onPress={() => null}
-                    text="Connect with facebook"
-                    style={style.socialBtn}
+                    colors={['#16ccc8', '#25eba3']}
+                    icon={icon}
                 />
             </View>
+            { isLogin && <View style={{ position: 'absolute', height: 100, width: '100%', top: '63%', zIndex: 1000 }}>
+                <Button
+                    onPress={() => null}
+                    styleText={style.forgot}
+                    text="Forgot ?"
+                />  
+                <Button
+                    onPress={() => null}
+                    style={style.toggleBtn}
+                    styleText={style.toggleText}
+                    text={`${!isLogin ? 'Login' : 'Register'}`}
+                />  
+            </View> }
+            
             <View style={style.bottomRightCorner}>
                 <ImageBackground source={require('assets/bottomLogin.png')} style={{ width: '100%', height: 260 }} />
+                <Button
+                    onPress={() => null}
+                    style={style.socialBtn}
+                    icon={<Entypo name="facebook-with-circle" size={52} color="#3B5998" />}
+                />
             </View>
         </View>
     )
@@ -131,7 +152,6 @@ function useFormInput(defaultValue) {
     return {
         value,
         onChangeText: (e) => setValue(e),
-        style: style.textInput,
-        underlineColorAndroid: 'white'
+        style: style.textInput
     };
 }
