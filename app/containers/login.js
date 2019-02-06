@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import Button from 'components/Button';
 import { showMessage } from 'react-native-flash-message';
 import { Entypo, Feather } from '@expo/vector-icons';
+import SpinnerIcon from 'components/SpinnerIcon';
 import style from './styles/login';
 import { signIn } from './utils/util';
 
@@ -43,13 +44,24 @@ export default compose(
             }
         }
     ), 
-    graphql(REGISTRATION, { name: 'registration', options: { update: registrationUpdate } })
+    graphql(REGISTRATION,
+        {
+            name: 'registration',
+            options: {
+                update: registrationUpdate,
+                onError: () => showMessage({
+                    message: 'Error',
+                    type: 'danger'
+                })
+            }
+        }
+    )
 )(Login);
 
 function Login({ login, registration }) {
     /*if (loading)
         return <Text>Loading....</Text>*/
-    
+
     const email = useFormInput('kerim1@gmail.com');
     const password = useFormInput('kerim1');
     const username = useFormInput('kerimlews');
@@ -61,17 +73,31 @@ function Login({ login, registration }) {
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(null);
 
+    const variables = {
+        variables: {
+            email: email.value,
+            username: username.value,
+            password: password.value
+        }
+    };
+
     function handleSubmitForm() {
         setLoading(true);
+        console.log('yes')
         if (isLogin) 
-            login({ variables: { email: email.value, password: password.value }});
+            login(variables);
         else
-            registration({ variables: { email: email.value, username: username.value, password: password.value }});
+            registration(variables);
     }
 
-    const icon = !isLogin
-        ? <Entypo name="check" size={32} color="white" />
-        : <Feather name="arrow-right" size={32} color="white" />;
+    function icon() { 
+        if(loading)
+            return <SpinnerIcon size={32} color="white"  />
+        else if(isLogin)
+            return <Entypo name="check" size={32} color="white" />
+        else
+            return <Feather name="arrow-right" size={32} color="white" />;
+    }
 
     return (
         <View style={style.login}>
@@ -112,17 +138,16 @@ function Login({ login, registration }) {
                         placeholder="Confirm password"
                     />
                  }
-                 <Button
+                <Button
                     onPress={() => handleSubmitForm()}
-                    text={`${isLogin ? 'Login' : 'Sign in'}`}
                     style={style.submitBtn}
                     colors={['#16ccc8', '#25eba3']}
-                    icon={icon}
+                    icon={icon()}
                 />
             </View>
             { isLogin && <View style={{ position: 'absolute', height: 100, width: '100%', top: '63%', zIndex: 1000 }}>
                 <Button
-                    onPress={() => null}
+                    onPress={() => handleSubmitForm()}
                     styleText={style.forgot}
                     text="Forgot ?"
                 />  
