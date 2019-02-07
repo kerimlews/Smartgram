@@ -6,6 +6,7 @@ import { AsyncStorage } from 'react-native';
 import { from } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import { navigation } from './stores/navigation';
+import { user } from './stores/user';
 
 const cache = new InMemoryCache({ addTypename: false });
 
@@ -20,11 +21,12 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const httpLinkUrl = new HttpLink({ uri: 'http://10.45.166.56:4000'});
+const httpLinkUrl = new HttpLink({ uri: 'http://10.45.166.63:4000'});
  // add client initial state
 const clientState = withClientState({
   cache,
   defaults: {
+    user,
     navigation
   }
 })

@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from 'react';
-import { View, TextInput, ImageBackground, Text, Image  } from 'react-native';
+import { View, TextInput, ImageBackground, Text  } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button from 'components/Button';
 import { showMessage } from 'react-native-flash-message';
-import { Entypo, Feather } from '@expo/vector-icons';
-import SpinnerIcon from 'components/SpinnerIcon';
+import SpinnerAnimation from 'animations/Spinner';
+import { Entypo, Feather, EvilIcons } from '@expo/vector-icons';
 import style from './styles/login';
 import { signIn } from './utils/util';
 
@@ -27,9 +27,18 @@ const REGISTRATION = gql`
         }
     }
 `
+const LOADING = gql`
+    query loading {
+        user @client {
+            isLoading
+        }
+    }
+`;
 
-const loginUpdate = (cache, { data: { login } }) => signIn(cache, login)
-const registrationUpdate = (cache, { data: { registration } }) => signIn(cache, registration)
+const loginUpdate = (cache, { data: { login } }) =>
+    signIn(cache, login)
+const registrationUpdate = (cache, { data: { registration } }) =>
+    signIn(cache, registration)
 
 export default compose(
     graphql(LOGIN,
@@ -37,8 +46,8 @@ export default compose(
             name: 'login',
             options: {
                 update: loginUpdate,
-                onError: () => showMessage({
-                    message: 'Error',
+                onError: ({ message }) => showMessage({
+                    message,
                     type: 'danger'
                 })
             }
@@ -49,18 +58,21 @@ export default compose(
             name: 'registration',
             options: {
                 update: registrationUpdate,
-                onError: () => showMessage({
-                    message: 'Error',
+                onError: ({ message }) => showMessage({
+                    message,
                     type: 'danger'
                 })
             }
         }
-    )
+    ),
+    graphql(LOADING, {
+        props: ({ data: { isLoading } }) => isLoading
+    })
 )(Login);
 
-function Login({ login, registration }) {
-    /*if (loading)
-        return <Text>Loading....</Text>*/
+
+function Login({ login, registration, isLoading }) {
+    console.log(isLoading)
 
     const email = useFormInput('kerim1@gmail.com');
     const password = useFormInput('kerim1');
@@ -70,7 +82,6 @@ function Login({ login, registration }) {
     const confirmPassword = useFormInput('');
 
     const [ isLogin, setLogin ]  = useState(true);
-    const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(null);
 
     const variables = {
@@ -82,8 +93,6 @@ function Login({ login, registration }) {
     };
 
     function handleSubmitForm() {
-        setLoading(true);
-        console.log('yes')
         if (isLogin) 
             login(variables);
         else
@@ -91,8 +100,12 @@ function Login({ login, registration }) {
     }
 
     function icon() { 
-        if(loading)
-            return <SpinnerIcon size={32} color="white"  />
+        if(isLoading)
+            return (
+                <SpinnerAnimation>
+                    <EvilIcons name="spinner-3" size={32} color="white" />
+                </SpinnerAnimation>
+            );
         else if(isLogin)
             return <Entypo name="check" size={32} color="white" />
         else

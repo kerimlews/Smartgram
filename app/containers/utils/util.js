@@ -2,8 +2,7 @@ import { AsyncStorage } from 'react-native';
 
 export async function signIn(client, requestData) {
     try {
-        const data = { ...requestData, isAuth: true }
-        console.log(data);
+        const data = { user: { ...requestData, isLoading: false }, isAuth: true }
         await client.writeData({ data });
         await AsyncStorage.setItem('token', requestData.token);
     } catch(ex) {
@@ -14,7 +13,7 @@ export async function signIn(client, requestData) {
 export async function signOut(client) {
     try {
         await AsyncStorage.removeItem('token');
-        await client.writeData({ data: { isAuth: false } });
+        await client.writeData({ data: { isAuth: false, user: { isLoading: false } } });
     } catch(ex) {
         console.log('Error sign out ', ex);
     }
