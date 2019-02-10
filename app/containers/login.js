@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import Button from 'components/Button';
 import { showMessage } from 'react-native-flash-message';
 import SpinnerAnimation from 'animations/Spinner';
+import FadeAnimation from 'animations/Fade';
 import { Entypo, Feather, EvilIcons } from '@expo/vector-icons';
 import style from './styles/login';
 import { signIn } from './utils/util';
@@ -124,7 +125,7 @@ function Login({ login, registration, isLoading }) {
                     placeholder="Email"
                 />
                 { !isLogin &&
-                    <Fragment>
+                    <FadeAnimation>
                         <TextInput
                             {...username}
                             placeholder="Username"
@@ -137,7 +138,7 @@ function Login({ login, registration, isLoading }) {
                             {...lastName}
                             placeholder="Last name"
                         />
-                    </Fragment>
+                    </FadeAnimation>
                 }
                 <TextInput
                     {...password}
@@ -146,11 +147,13 @@ function Login({ login, registration, isLoading }) {
                 />
                 
                 { !isLogin &&
-                    <TextInput
-                        {...confirmPassword}
-                        placeholder="Confirm password"
-                    />
-                 }
+                    <FadeAnimation>
+                        <TextInput
+                            {...confirmPassword}
+                            placeholder="Confirm password"
+                        />
+                    </FadeAnimation>
+                }
                 <Button
                     onPress={() => handleSubmitForm()}
                     style={style.submitBtn}
