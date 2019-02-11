@@ -21,7 +21,7 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const httpLinkUrl = new HttpLink({ uri: 'http://192.168.0.13:4000'});
+const httpLinkUrl = new HttpLink({ uri: 'http://10.45.166.68:4000'});
  // add client initial state
 const clientState = withClientState({
   cache,
@@ -29,7 +29,7 @@ const clientState = withClientState({
     user,
     navigation
   }
-})
+});
 
 export default new ApolloClient({
   link: from([httpLinkUrl, authMiddleware, clientState]),

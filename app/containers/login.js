@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { View, TextInput, ImageBackground, Text  } from 'react-native';
+import { View, TextInput, ImageBackground, Text, Image  } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button from 'components/Button';
@@ -9,6 +9,7 @@ import FadeAnimation from 'animations/Fade';
 import { Entypo, Feather, EvilIcons } from '@expo/vector-icons';
 import style from './styles/login';
 import { signIn } from './utils/util';
+import SvgUri from 'react-native-svg-uri';
 
 const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
@@ -29,9 +30,9 @@ const REGISTRATION = gql`
     }
 `
 const LOADING = gql`
-    query loading {
+    {
         user @client {
-            isLoading
+            isLoading  
         }
     }
 `;
@@ -78,11 +79,11 @@ function Login({ login, registration, isLoading }) {
     const email = useFormInput('kerim1@gmail.com');
     const password = useFormInput('kerim1');
     const username = useFormInput('kerimlews');
-    const firstName = useFormInput('Kerim');
-    const lastName = useFormInput('Alihodza');
+    const firstName = useFormInput('Kerim', style.customTextInput);
+    const lastName = useFormInput('Alihodza', { ...style.customTextInput, borderLeftColor: '#e2e2e2', borderLeftWidth: 1 });
     const confirmPassword = useFormInput('');
 
-    const [ isLogin, setLogin ]  = useState(true);
+    const [ isLogin, setLogin ]  = useState(false);
     const [ error, setError ] = useState(null);
 
     const variables = {
@@ -116,9 +117,19 @@ function Login({ login, registration, isLoading }) {
     return (
         <View style={style.login}>
             <View style={style.topLeftCorner}>
-                <ImageBackground source={require('assets/topLogin.png')}  style={{ width: '100%', height: 270 }}/>
-            </View>
+           {<SvgUri source={require('assets/topLogin.svg')} />   }         </View>
+    
+            { !isLogin && <View style={{ alignSelf: 'flex-end' }}>
+                <Button
+                    onPress={() => setLogin(!isLogin)}
+                    style={style.loginBtn}
+                    styleText={style.toggleText}
+                    text="Login"
+                />
+            </View> }
+
             <Text style={style.header}>Smartgram</Text>
+    
             <View style={style.form}>
                 <TextInput
                     {...email}
@@ -127,17 +138,19 @@ function Login({ login, registration, isLoading }) {
                 { !isLogin &&
                     <FadeAnimation>
                         <TextInput
-                            {...username}
-                            placeholder="Username"
-                        />
-                        <TextInput
-                            {...firstName}
-                            placeholder="First name"
-                        />
-                        <TextInput
-                            {...lastName}
-                            placeholder="Last name"
-                        />
+                                {...username}
+                                placeholder="Username"
+                            />
+                        <View style={{ flexDirection: 'row' }}>
+                            <TextInput
+                                {...firstName}
+                                placeholder="First name"
+                            />
+                            <TextInput
+                                {...lastName}
+                                placeholder="Last name"
+                            />
+                        </View>
                     </FadeAnimation>
                 }
                 <TextInput
@@ -154,27 +167,33 @@ function Login({ login, registration, isLoading }) {
                         />
                     </FadeAnimation>
                 }
-                <Button
-                    onPress={() => handleSubmitForm()}
-                    style={style.submitBtn}
-                    colors={['#16ccc8', '#25eba3']}
-                    icon={icon()}
-                />
+                <View style={{ marginTop: isLogin ? '12%' : '45%', position: 'absolute', right: -25 }}>
+                    <Button
+                        onPress={() => handleSubmitForm()}
+                        style={style.submitBtn}
+                        colors={['#16ccc8', '#25eba3']}
+                        icon={icon()}
+                    />
+                </View>
             </View>
-            { isLogin && <View style={{ position: 'absolute', height: 100, width: '100%', top: '63%', zIndex: 1000 }}>
+
+            { isLogin && <View style={style.bottomSection}>
                 <Button
-                    onPress={() => handleSubmitForm()}
+                    onPress={() => setLogin(!isLogin)}
                     styleText={style.forgot}
                     text="Forgot ?"
                 />  
-                <Button
-                    onPress={() => null}
-                    style={style.toggleBtn}
-                    styleText={style.toggleText}
-                    text={`${!isLogin ? 'Login' : 'Register'}`}
-                />  
             </View> }
             
+            { isLogin && <View>
+                <Button
+                    onPress={() => setLogin(!isLogin)}
+                    style={style.registBtn}
+                    styleText={style.toggleText}
+                    text="Register"
+                />
+            </View> }
+
             <View style={style.bottomRightCorner}>
                 <ImageBackground source={require('assets/bottomLogin.png')} style={{ width: '100%', height: 260 }} />
                 <Button
@@ -187,12 +206,12 @@ function Login({ login, registration, isLoading }) {
     )
 }
 
-function useFormInput(defaultValue) {
+function useFormInput(defaultValue, customStyle) {
     const [ value, setValue ] = useState(defaultValue);
 
     return {
         value,
         onChangeText: (e) => setValue(e),
-        style: style.textInput
+        style: customStyle || style.textInput
     };
 }

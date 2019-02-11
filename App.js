@@ -11,7 +11,8 @@ const IS_AUTH = gql`
   {
     isAuth @client
   }
-`
+`;
+
 const App = () => (
   <ApolloProvider>
     <Query query={IS_AUTH}>

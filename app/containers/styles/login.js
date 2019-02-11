@@ -5,8 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        backgroundColor: '#fdfdfe',
-        position: 'relative'
+        backgroundColor: '#fdfdfe'
     },
     linear: {  
         alignItems: 'center',
@@ -14,13 +13,11 @@ export default StyleSheet.create({
         zIndex: 10
     },
     header: {
-        position: 'absolute',
-        top: '25%',
         alignSelf: 'center',
         fontFamily: 'sans-serif',
         color: '#3d5169',
         fontSize: 30,
-        fontWeight: '600'
+        fontWeight: '600',
     },
     forgot: {
         color: '#cbd4de',
@@ -35,21 +32,34 @@ export default StyleSheet.create({
         width: '85%',
         borderTopRightRadius: 100,
         borderBottomRightRadius: 100,
-        elevation: 5,
+        elevation: 4,
         height: 'auto',
         position: 'relative',
         shadowColor: '#d1d8e1',
-        shadowOffset: { width: 4, height: 4 },
-        shadowRadius: 10
+        shadowOffset: { width: 1, height: 1 },
+        shadowRadius: 1,
+        marginTop: 40
     },
-    toggleBtn: {
+    registBtn: {
         height: 50,
         elevation: 1,
         width: 140,
         marginTop: 20,
         borderTopRightRadius: 25,
         borderBottomRightRadius: 25,
-        position: 'absolute',
+        justifyContent: 'center',
+        shadowColor: '#d1d8e1',
+        shadowOffset: { width: 4, height: 4 },
+        shadowRadius: 10,
+        zIndex: 1000
+    },
+    loginBtn: {
+        height: 50,
+        elevation: 1,
+        width: 100,
+        marginTop: 20,
+        borderTopLeftRadius: 25,
+        borderBottomLeftRadius: 25,
         justifyContent: 'center',
         shadowColor: '#d1d8e1',
         shadowOffset: { width: 4, height: 4 },
@@ -61,20 +71,21 @@ export default StyleSheet.create({
         fontSize: 20,
         marginLeft: 20
     },
+    bottomSection: {
+        alignItems: 'flex-end',
+        width: '100%',
+        zIndex: 1000
+    },
     submitBtn: {
-        width: 70,
-        height: 70,
-        borderRadius: 70,
-        position: 'absolute',
-        right: -25,
+        width: 60,
+        height: 60,
+        borderRadius: 60,
         elevation: 5,
         shadowColor: '#d1d8e1',
         shadowOffset: { width: 4, height: 4 },
         shadowRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'center',
-        bottom: 30
     },
     bottomRightCorner: {
         position: 'relative'
@@ -107,11 +118,25 @@ export default StyleSheet.create({
         fontSize: 16,
         color: '#8093ad'
     },
+    customTextInput: {
+        flex: 1,
+        fontFamily: 'ubuntu',
+        padding: 20,
+        borderBottomColor: '#f8fafb',
+        borderBottomWidth: 1,
+        margin: 0,
+        fontSize: 16,
+        color: '#8093ad'
+    },
     topLeftCorner: {
         position: 'absolute',
         top: 0,
         left: 0,
-        right: 0
+        right: 0,
+        backgroundColor: '#fca9b2',
+        height: 300,
+        borderBottomLeftRadius: 100,
+        borderBottomRightRadius: 100
     },
     bottomRightCorner: {
         position: 'absolute',
@@ -131,3 +156,7 @@ export default StyleSheet.create({
         justifyContent: 'space-between'
     }
 })
+
+const toggleBtn = {
+
+}
