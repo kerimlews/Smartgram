@@ -42,24 +42,15 @@ class Content extends Component {
   render() {
     return (
       <Query query={ACTIVE_TAB}>
-      {({ data: { navigation: { activeTab }, error, loading, client }}) => {
-          ///console.log(client);
-
-          if(loading)
-            return <Text>loadingggggg</Text>
-          if (error)
-            console.log(error);
-          return (
-              <View style={style.content} {...this._panResponder.panHandlers} >
+      {({ data: { navigation: { activeTab }, error, loading, client }}) =>
+              <View style={style.content}>
                   { activeTab === 0 &&  <Home />}
                   { activeTab === 1 &&  <Book />}
                   { activeTab === 2 &&  <Messages />}
                   { activeTab === 3 &&  <Notice />}
                   { activeTab === 4 &&  <Settings />}
               </View>
-          );
         }
-      }
       </Query>
     );
   };

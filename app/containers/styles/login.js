@@ -7,7 +7,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fdfdfe'
     },
-    linear: {  
+    linear: {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 10
@@ -86,6 +86,7 @@ export default StyleSheet.create({
         shadowRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex: 10000000
     },
     bottomRightCorner: {
         position: 'relative'

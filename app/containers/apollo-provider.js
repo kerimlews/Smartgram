@@ -10,7 +10,9 @@ const CHECK_TOKEN = gql`
     checkToken
       {
         email
-        username
+        username,
+        firstName,
+        lastName
       }
   }
 `
@@ -21,7 +23,7 @@ export default function Provider({ children }) {
 
     useEffect(() => {
         loadFont();
-    }, [isLoadFont]);
+    });
 
     async function loadFont() {
         await Font.loadAsync({
@@ -37,8 +39,8 @@ export default function Provider({ children }) {
                     ({ data: { checkToken }, error, loading, client }) => {
                         if (loading || isLoadFont)
                             return <Text>LOADINGGGG</Text>;
-                    
-                        client.writeData({ data: { ...checkToken, isAuth: checkToken != null } });
+                        console.log(checkToken);
+                        client.writeData({ data: { user: { ...checkToken, __typename: 'user' }, isAuth: checkToken != null } });
 
                         return children;
                 }}

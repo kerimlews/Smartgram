@@ -3,7 +3,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 import { AsyncStorage } from 'react-native';
-import { from } from 'apollo-link';
+import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import { navigation } from './stores/navigation';
 import { user } from './stores/user';
@@ -12,7 +12,7 @@ const cache = new InMemoryCache({ addTypename: false });
 
 const authMiddleware = setContext(async (req, { headers }) => {
   const token = await AsyncStorage.getItem('token');
-
+  console.log(token);
   return {
     headers: {
       ...headers,
@@ -32,6 +32,6 @@ const clientState = withClientState({
 });
 
 export default new ApolloClient({
-  link: from([httpLinkUrl, authMiddleware, clientState]),
+  link: ApolloLink.from([clientState, authMiddleware, httpLinkUrl]),
   cache
 })

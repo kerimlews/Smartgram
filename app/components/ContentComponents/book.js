@@ -6,24 +6,26 @@ import gql from 'graphql-tag';
 
 const PROFILE = gql`
   {
-      username @client
-      email @client
+      user @client {
+        username,
+        firstName,
+        lastName,
+        email
+      }
   }
-`
+`;
+
 const Book = () => (
   <Query query={PROFILE}>
-  { ({ data: { username, email }, loading, error }) => {
-
-    if (loading)
-      return <Text>LOADINGGGGGG</Text>
-    return (
+  {({ data: { user: { firstName, lastName, username, email } }, loading, error }) =>
       <View>
+        <Text>{lastName}</Text>
+        <Text>{firstName}</Text>
         <Text>{username}</Text>
         <Text>{email}</Text>
       </View>
-    );
-  }}
+  }
   </Query>
-);
+)
 
 export default Book;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { LinearGradient } from 'expo';
 
-export default function Button({ onPress, colors, style, styleText, text, icon }) {
+export default function Button({ onPress, colors, style, styleText, text, icon, disabled }) {
     return(
-            <TouchableWithoutFeedback onPress={onPress}>
+            <TouchableWithoutFeedback onPress={disabled ? null : onPress}>
                 { colors ?
                     <LinearGradient colors={colors} style={style}>
                         {icon}
