@@ -44,11 +44,11 @@ export default compose(
 
 function Login({ login, registration }) {
 
-    const email = useFormInput('kerim1@gmail.com');
+    const email = useFormInput('borna@gmail.com');
     const password = useFormInput('kerim1');
-    const username = useFormInput('kerimlews');
-    const firstName = useFormInput('Kerim', style.customTextInput);
-    const lastName = useFormInput('Alihodza', { ...style.customTextInput, borderLeftColor: '#e2e2e2', borderLeftWidth: 1 });
+    const username = useFormInput('bornaNozic');
+    const firstName = useFormInput('Borna', style.customTextInput);
+    const lastName = useFormInput('Nozic', { ...style.customTextInput, borderLeftColor: '#e2e2e2', borderLeftWidth: 1 });
     const confirmPassword = useFormInput('');
 
     const [ isLoading, setLoading ]  = useState(false);
@@ -112,7 +112,7 @@ function Login({ login, registration }) {
                     placeholder="Email"
                 />
                 { !isLogin &&
-                    <FadeAnimation>
+                    <View>
                         <TextInput
                                 {...username}
                                 placeholder="Username"
@@ -127,7 +127,7 @@ function Login({ login, registration }) {
                                 placeholder="Last name"
                             />
                         </View>
-                    </FadeAnimation>
+                    </View>
                 }
                 <TextInput
                     {...password}

@@ -35,8 +35,8 @@ export default compose(
 )(Home);
 
 function Home({ addConversation }) {
-    const user2 = 'cjs39b5emxq0t0b9669jbe5iz';
-    const message = 'Hello !';
+    const user2 = 'cjs61zbxz5weo0b00u5jh6sqw';
+    const message = 'dzesi kera sta mai ?';
 
     const variables = { variables: {  user2, message } };
 

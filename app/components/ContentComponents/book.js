@@ -17,7 +17,7 @@ const PROFILE = gql`
 
 const Book = () => (
   <Query query={PROFILE}>
-  {({ data: { user: { firstName, lastName, username, email } }, loading, error }) =>
+  {({ data: { user: { firstName, lastName, username, email } } }) =>
       <View>
         <Text>{lastName}</Text>
         <Text>{firstName}</Text>
