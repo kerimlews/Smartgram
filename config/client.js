@@ -3,7 +3,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 import { AsyncStorage } from 'react-native';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { withClientState } from 'apollo-link-state';
@@ -23,10 +23,10 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const httpLinkUrl = new HttpLink({ uri: 'http://10.45.166.68:4000'});
+const httpLinkUrl = new HttpLink({ uri: 'http://192.168.0.13:4000'});
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/`,
+  uri: `http://192.168.0.13:4000`,
   options: {
     reconnect: true
   }
@@ -50,8 +50,9 @@ const link = split(
     return kind === 'OperationDefinition' && operation === 'subscription';
   },
   wsLink,
-  httpLink,
+  httpLinkUrl,
 );
+
 
 export default new ApolloClient({
   link: ApolloLink.from([clientState, authMiddleware, link]),

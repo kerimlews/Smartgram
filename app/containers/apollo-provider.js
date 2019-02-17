@@ -4,6 +4,8 @@ import { Font } from 'expo';
 import { Text, Platform, StyleSheet } from 'react-native';
 import gql from 'graphql-tag';
 import client from 'config/client';
+import { Notifications } from 'expo';
+import registerForPushNotificationsAsync from './registerForPushNotificationsAsync';
 
 const CHECK_TOKEN = gql`
   {
@@ -23,7 +25,15 @@ export default function Provider({ children }) {
 
     useEffect(() => {
         loadFont();
+        registerForPushNotificationsAsync();
+
+        _notificationSubscription = Notifications.addListener(_handleNotification);
+
     });
+
+    _handleNotification = (notification) => {
+        console.log('notification', notification)
+    };
 
     async function loadFont() {
         await Font.loadAsync({

@@ -27,8 +27,22 @@ export const GET_CONVERSATION = gql`
   }
 `;
 
-const SEND_MESSAGE = gql`
-  mutation sendMessage($id: String!, message: String) {
+export const MESSAGE_SUBS = gql`
+  subscription {
+    message{
+      id
+      message
+      attached
+      isSeen
+      isDeleted
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const SEND_MESSAGE = gql`
+  mutation addMessage($id: String!, $message: String) {
     addMessage(id: $id, message: $message) {
       id
       message
