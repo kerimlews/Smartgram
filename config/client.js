@@ -23,10 +23,13 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const httpLinkUrl = new HttpLink({ uri: 'http://192.168.0.13:4000'});
+const ipAddress = '10.45.166.68';
+const uri = `http://${ipAddress}:4000`;
+
+const httpLinkUrl = new HttpLink({ uri });
 
 const wsLink = new WebSocketLink({
-  uri: `http://192.168.0.13:4000`,
+  uri,
   options: {
     reconnect: true
   }

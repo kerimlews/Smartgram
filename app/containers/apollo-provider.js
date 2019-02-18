@@ -2,22 +2,10 @@ import { ApolloProvider, Query } from 'react-apollo';
 import React, { useEffect, useState } from 'react';
 import { Font } from 'expo';
 import { Text, Platform, StyleSheet } from 'react-native';
-import gql from 'graphql-tag';
 import client from 'config/client';
 import { Notifications } from 'expo';
-import registerForPushNotificationsAsync from './registerForPushNotificationsAsync';
-
-const CHECK_TOKEN = gql`
-  {
-    checkToken
-      {
-        email
-        username,
-        firstName,
-        lastName
-      }
-  }
-`
+import registerForPushNotificationsAsync from 'config/registerForPushNotificationsAsync';
+import { CHECK_TOKEN } from './queries/apollo-provider';
 
 export default function Provider({ children }) {
 
@@ -27,8 +15,7 @@ export default function Provider({ children }) {
         loadFont();
         registerForPushNotificationsAsync();
 
-        _notificationSubscription = Notifications.addListener(_handleNotification);
-
+        const _notificationSubscription = Notifications.addListener(_handleNotification);
     });
 
     _handleNotification = (notification) => {
@@ -39,6 +26,7 @@ export default function Provider({ children }) {
         await Font.loadAsync({
             'ubuntu': require('assets/fonts/Ubuntu-Regular.ttf'),
         });
+
         setIsLoadFont(false);
     }
 

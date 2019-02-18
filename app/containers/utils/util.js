@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import fetch from './fetch';
 
 export async function signIn(client, requestData) {
     try {
@@ -13,6 +14,7 @@ export async function signIn(client, requestData) {
 
 export async function signOut(client) {
     try {
+        await fetch({ query: `mutation { logout }`});
         await AsyncStorage.removeItem('token');
         await client.writeData({ data: { isAuth: false } });
     } catch(ex) {

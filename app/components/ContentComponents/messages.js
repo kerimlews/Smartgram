@@ -12,7 +12,6 @@ export default function Messages() {
   const [ message, setMessage ] = useState('');
 
   function handleChangeContent(id) {
-    console.log(id);
     setId(id);
     setPage(1);
     setContent(!content);
@@ -22,8 +21,7 @@ export default function Messages() {
       id,
       page,
       search,
-      message,
-      user2: id
+      message
   };
 
   return (
@@ -73,8 +71,6 @@ export default function Messages() {
               <Subscription subscription={MESSAGE_SUBS}>
               {({ data , error }) => {
 
-                console.log('subs', data, error)
-
                 const newMessages = data ? getConversation.concat(data.message) : getConversation;
                 return (
                   <FlatList
@@ -86,7 +82,7 @@ export default function Messages() {
                 />
                 );
               }
-                
+
               }
               </Subscription>
               <View>
@@ -98,16 +94,15 @@ export default function Messages() {
                   value={message}
                 />
                 <Mutation mutation={SEND_MESSAGE}>
-                {addMessage => 
+                {addMessage =>
                     <Button
                       onPress={() => addMessage({ variables })}
                       title="Send"
                       color="#841584"
-                      accessibilityLabel="Learn more about this purple button"
                     />
                 }
                 </Mutation>
-                
+
               </View>
             </View>
           );
