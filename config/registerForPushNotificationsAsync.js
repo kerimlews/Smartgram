@@ -1,4 +1,5 @@
 import { Permissions, Notifications } from 'expo';
+import { AsyncStorage } from 'react-native';
 import fetch from 'containers/utils/fetch';
 
 export default async function registerForPushNotificationsAsync() {
@@ -23,6 +24,9 @@ export default async function registerForPushNotificationsAsync() {
 
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
+
+  await AsyncStorage.setItem('expoToken', token);
+
   console.log('expo', token);
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   return fetch({

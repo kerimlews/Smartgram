@@ -10,6 +10,7 @@ export default function Messages() {
   const [ content, setContent ] = useState(true);
   const [ id, setId ] = useState(null);
   const [ message, setMessage ] = useState('');
+  const token = async () => await AsyncStorage.getItem('expoToken');
 
   function handleChangeContent(id) {
     setId(id);
@@ -68,7 +69,7 @@ export default function Messages() {
 
           return (
             <View>
-              <Subscription subscription={MESSAGE_SUBS}>
+              <Subscription subscription={MESSAGE_SUBS} variables={{ token }}>
               {({ data , error }) => {
 
                 const newMessages = data ? getConversation.concat(data.message) : getConversation;
