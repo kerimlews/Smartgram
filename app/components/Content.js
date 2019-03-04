@@ -7,7 +7,7 @@ import style from './styles/content';
 import Settings from './ContentComponents/settings';
 import Book from './ContentComponents/book';
 import Home from './ContentComponents/home';
-import Messages from './ContentComponents/messages';
+import Messages from './ContentComponents/Message';
 import Notice from './ContentComponents/notice';
 
 const ACTIVE_TAB = gql`
