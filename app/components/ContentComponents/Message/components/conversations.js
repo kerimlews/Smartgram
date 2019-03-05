@@ -6,12 +6,13 @@ import ConversationsItem from './components/conversations-item';
 
 export default function Conversations({ variables, openConversation }) {
   return (
-    <Query query={GET_CONVERSATIONS} variables={variables}>
+    <Query query={GET_CONVERSATIONS} variables={variables} fetchPolicy="network-only">
     {
       ({ data: { getConversations }, error, loading, refetch }) => {
 
         const _keyExtractor = item => item.id;
-        const data = getConversations || [];
+        const data = getConversations ? 
+       [...getConversations, ...getConversations, ...getConversations, ...getConversations, ...getConversations,...getConversations, ...getConversations, ...getConversations, ...getConversations, ...getConversations] : [];
 
         const _renderItem = ({ item }) => (
           <ConversationsItem
@@ -21,7 +22,7 @@ export default function Conversations({ variables, openConversation }) {
         );
 
         return (
-          <View style={{ width: '100%', height: '100%', padding: 10, backgroundColor: '#f4f6f7' }}>
+          <View style={{ width: '100%', height: '100%', backgroundColor: '#f4f6f7' }}>
             <FlatList
                 data={data}
                 refreshing={loading}

@@ -33,7 +33,7 @@
     "hyperapp": "^1.2.9",
     "metro-react-native-babel-preset": "^0.51.1",
     "react": "^16.8.0-alpha.1",
-    "react-apollo": "^2.2.4",
+    "react-apollo": "^2.5.1",
     "react-dom": "^16.8.0-alpha.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.1.tar.gz",
     "react-native-flash-message": "^0.1.10",

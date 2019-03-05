@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     nav: {
       backgroundColor: '#3f9384',
-      marginTop: Expo.Constants.statusBarHeight,
       flexDirection: 'row',
       height: 50
     },
