@@ -38,7 +38,6 @@ export default function SearchBar() {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    
                 );
 
                 return (
@@ -61,6 +60,9 @@ export default function SearchBar() {
                                                 value={search}
                                                 style={{height: 40, borderColor: 'gray', borderBottomWidth: 1, color: 'white', paddingLeft: 65, flex: 1}}
                                                 onChangeText={text => setSearch(text)}
+                                                onFocus={() => {
+                                                    setProfile(null);
+                                                }}
                                                 placeholder="Search for frends..."
                                             />
                                         :   <TouchableOpacity onPress={() => setSearchContent(true)}>

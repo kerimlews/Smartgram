@@ -42,13 +42,13 @@ export default function Conversation({ variables }) {
                 value={message}
               />
               <Mutation mutation={SEND_MESSAGE}>
-              {addMessage =>
-                  <Button
-                    onPress={() => addMessage({ variables })}
-                    title="Send"
-                    color="#841584"
-                  />
-              }
+                {addMessage =>
+                    <Button
+                      onPress={() => addMessage({ variables })}
+                      title="Send"
+                      color="#841584"
+                    />
+                }
               </Mutation>
 
             </View>

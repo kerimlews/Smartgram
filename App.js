@@ -18,7 +18,6 @@ const App = () => (
     <Query query={IS_AUTH}>
       {
         ({ data: { isAuth }, error, loading }) => {
-
           if (loading)
             return <Text>LOADINGGGG</Text>
             

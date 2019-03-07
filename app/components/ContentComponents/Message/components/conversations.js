@@ -11,8 +11,7 @@ export default function Conversations({ variables, openConversation }) {
       ({ data: { getConversations }, error, loading, refetch }) => {
 
         const _keyExtractor = item => item.id;
-        const data = getConversations ? 
-       [...getConversations, ...getConversations, ...getConversations, ...getConversations, ...getConversations,...getConversations, ...getConversations, ...getConversations, ...getConversations, ...getConversations] : [];
+        const data = getConversations ? getConversations : [];
 
         const _renderItem = ({ item }) => (
           <ConversationsItem
