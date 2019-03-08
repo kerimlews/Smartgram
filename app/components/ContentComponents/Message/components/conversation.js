@@ -8,7 +8,7 @@ export default function Conversation({ variables }) {
   const [ message, setMessage ] = useState('');
 
   return (
-    <Query query={GET_CONVERSATION} variables={{ ...variables, message }}>
+    <Query query={GET_CONVERSATION} variables={variables}>
     {
       ({ data: { getConversation }, error, loading, refetch }) => {
 
@@ -44,7 +44,7 @@ export default function Conversation({ variables }) {
               <Mutation mutation={SEND_MESSAGE}>
                 {addMessage =>
                     <Button
-                      onPress={() => addMessage({ variables })}
+                      onPress={() => addMessage({ variables: { ...variables, message } })}
                       title="Send"
                       color="#841584"
                     />
