@@ -13,7 +13,8 @@ module.exports = function(api) {
                 "animations": "./app/animations",
                 "styles": "./app/styles",
                 "config": "./config",
-                "assets": "./assets"
+                "assets": "./assets",
+                "routes": "./routes"
               }
             }]
         ] 

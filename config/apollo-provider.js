@@ -5,7 +5,6 @@ import { Text, Platform, StyleSheet } from 'react-native';
 import client from 'config/client';
 import { Notifications } from 'expo';
 import registerForPushNotificationsAsync from 'config/registerForPushNotificationsAsync';
-import { CHECK_TOKEN } from './queries/apollo-provider';
 
 export default function Provider({ children }) {
 
@@ -32,17 +31,7 @@ export default function Provider({ children }) {
 
     return (
         <ApolloProvider client={client} style={style.container}>
-            <Query query={CHECK_TOKEN}>
-                {
-                    ({ data: { checkToken }, error, loading, client }) => {
-                        if (loading || isLoadFont)
-                            return <Text>LOADINGGGG</Text>;
-                        console.log(checkToken);
-                        client.writeData({ data: { user: { ...checkToken, __typename: 'user' }, isAuth: checkToken != null } });
-
-                        return children;
-                }}
-            </Query>
+            {children}
         </ApolloProvider>
     );
 }
