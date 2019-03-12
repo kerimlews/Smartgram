@@ -5,7 +5,7 @@ import Button from 'components/Button';
 import style from 'styles/Button';
 import { signOut } from 'containers/utils/util';
 
-const Settings = () => (
+const Settings = ({ navigation }) => (
   <ApolloConsumer>
   { client => (
     <FlatList
@@ -14,7 +14,10 @@ const Settings = () => (
         <Button
           key={item.text}
           text={item.text}
-          onPress={() => signOut(client)}
+          onPress={async () => {
+            await signOut(client);
+            navigation.navigate('Auth');
+          }}
           style={style.button}
         />
       }

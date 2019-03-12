@@ -39,7 +39,6 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.1.tar.gz",
     "react-native-flash-message": "^0.1.10",
     "react-native-fs": "^2.13.3",
-    "react-native-gesture-handler": "^1.1.0",
     "react-native-paper": "^2.12.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-svg-transformer": "^0.12.0",

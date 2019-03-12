@@ -6,14 +6,12 @@ import Content from 'components/Content';
 import Stores from 'components/Stores';
 import SearchBar from 'components/SearchBar';
 
-import style from './styles/home';
+import style from '../styles/home';
 
-const Home = () =>
-  <View style={style.home}>
-      <SearchBar />
-      <Navigation />
-      <Content />
-      <Stores />
-  </View>
-
-export default Home;
+export default function Home() {
+    return (
+        <View>
+            <Text>HOMEEEE</Text>
+        </View>
+    );
+}

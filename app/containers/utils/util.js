@@ -4,7 +4,7 @@ import fetch from './fetch';
 export async function signIn(client, requestData) {
     try {
         console.log(requestData);
-        const data = { user: { ...requestData, __typename: 'user' }, isAuth: true }
+        const data = { user: { ...requestData, __typename: 'user' } }
         await client.writeData({ data });
         await AsyncStorage.setItem('token', requestData.token);
     } catch(ex) {
@@ -12,11 +12,10 @@ export async function signIn(client, requestData) {
     }
 }
 
-export async function signOut(client) {
+export async function signOut() {
     try {
         await fetch({ query: `mutation { logout }`});
         await AsyncStorage.removeItem('token');
-        await client.writeData({ data: { isAuth: false } });
     } catch(ex) {
         console.log('Error sign out ', ex);
     }

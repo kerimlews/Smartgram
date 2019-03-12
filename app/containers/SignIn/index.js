@@ -1,83 +1,51 @@
-import React, { useState, Fragment } from 'react';
-import { View, TextInput, ImageBackground, Text, Image  } from 'react-native';
-import { compose, graphql, withApollo  } from 'react-apollo';
+import React, { useState } from 'react';
+import { View, ImageBackground, Text  } from 'react-native';
+import { Mutation  } from 'react-apollo';
+import { TextInput } from 'react-native-paper';
 import Button from 'components/Button';
 import { showMessage } from 'react-native-flash-message';
 import SpinnerAnimation from 'animations/Spinner';
 import FadeAnimation from 'animations/Fade';
 import { Entypo, Feather, EvilIcons } from '@expo/vector-icons';
-import style from './styles/login';
-import { signIn } from './utils/util';
-import SvgUri from 'react-native-svg-uri';
-import { LOGIN, REGISTRATION, LOADING } from './queries/login';
-
-const loginUpdate = (cache, { data: { login } }) =>
-    signIn(cache, login)
-const registrationUpdate = (cache, { data: { registration } }) =>
-    signIn(cache, registration)
+import style from '../styles/login';
+import { signIn } from '../utils/util';
+import { LOGIN, REGISTRATION } from '../queries/login';
 
 const onError = ({ message }) => showMessage({
     message,
     type: 'danger'
 });
 
-export default compose(
-    graphql(LOGIN,
-        {
-            name: 'login',
-            options: {
-                update: loginUpdate,
-                onError
-            }
-        }
-    ),
-    graphql(REGISTRATION,
-        {
-            name: 'registration',
-            options: {
-                update: registrationUpdate,
-                onError
-            }
-        }
-    )
-)(Login);
-
-function Login({ login, registration }) {
+export default function SignIn({ navigation }) {
 
     const email = useFormInput('kerim@gmail.com');
     const password = useFormInput('kerim1');
     const username = useFormInput('kerimlews');
-    const firstName = useFormInput('Kerim', style.customTextInput);
-    const lastName = useFormInput('Alihodza', { ...style.customTextInput, borderLeftColor: '#e2e2e2', borderLeftWidth: 1 });
+    const firstName = useFormInput('Kerim');
+    const lastName = useFormInput('Alihodza');
     const confirmPassword = useFormInput('');
 
-    const [ isLoading, setLoading ]  = useState(false);
     const [ isLogin, setLogin ]  = useState(false);
     const [ error, setError ] = useState(null);
 
-    const variables = {
-        variables: {
-            email: email.value,
-            username: username.value,
-            firstName: firstName.value,
-            lastName: lastName.value,
-            password: password.value
-        }
-    };
+    const loginUpdate = (cache, { data: { login } }) => handleSignIn(cache, login)
+    const registrationUpdate = (cache, { data: { registration } }) => handleSignIn(cache, registration)
 
-    async function handleSubmitForm() {
-        setLoading(true);
-
-        if (isLogin)
-            await login(variables);
-        else
-            await registration(variables);
-
-        setLoading(false);
+    function handleSignIn(cache, data) {
+        signIn(cache, data)
+        navigation.navigate('App');
     }
 
-    function icon() {
-        if(isLoading)
+    const variables = {
+        email: email.value,
+        username: username.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        password: password.value
+    };
+
+    function icon(loading) {
+        if(loading)
             return (
                 <SpinnerAnimation>
                     <EvilIcons name="spinner-3" size={32} color="white" />
@@ -90,7 +58,7 @@ function Login({ login, registration }) {
     }
 
     return (
-        <View style={style.login}>
+        <View >
           {/* <View style={style.topLeftCorner}>
 
            </View>*/ }
@@ -106,7 +74,7 @@ function Login({ login, registration }) {
 
             <Text style={style.header}>Smartgram</Text>
 
-            <View style={style.form}>
+            <View>
                 <TextInput
                     {...email}
                     placeholder="Email"
@@ -143,14 +111,36 @@ function Login({ login, registration }) {
                         />
                     </FadeAnimation>
                 }
+
                 <View style={{ marginTop: isLogin ? '12%' : '45%', position: 'absolute', right: -25 }}>
-                    <Button
-                        onPress={() => handleSubmitForm()}
-                        style={style.submitBtn}
-                        colors={['#16ccc8', '#25eba3']}
-                        icon={icon()}
-                        disabled={isLoading}
-                    />
+                {
+                    isLogin
+                    ? (
+                        <Mutation mutation={LOGIN} onError={onError} update={loginUpdate}>
+                        {(login, { loading }) =>
+                            <Button
+                                onPress={() => login({ variables })}
+                                style={style.submitBtn}
+                                colors={['#16ccc8', '#25eba3']}
+                                icon={icon(loading)}
+                                disabled={loading}
+                            />
+                        }
+                        </Mutation>  
+                    ) : (
+                        <Mutation mutation={REGISTRATION} onError={onError} update={registrationUpdate}>
+                        {(registration, { loading }) =>
+                            <Button
+                                onPress={() => registration({ variables })}
+                                style={style.submitBtn}
+                                colors={['#16ccc8', '#25eba3']}
+                                icon={icon(loading)}
+                                disabled={loading}
+                            />
+                        }
+                        </Mutation>
+                    )
+                }    
                 </View>
             </View>
 
@@ -171,14 +161,14 @@ function Login({ login, registration }) {
                 />
             </View> }
 
-            <View style={style.bottomRightCorner}>
+            {/* <View style={style.bottomRightCorner}>
                 <ImageBackground source={require('assets/bottomLogin.png')} style={{ width: '100%', height: 260 }} />
                 <Button
                     onPress={() => null}
                     style={style.socialBtn}
                     icon={<Entypo name="facebook-with-circle" size={52} color="#3B5998" />}
                 />
-            </View>
+            </View>*/ }
         </View>
     )
 }
@@ -189,6 +179,6 @@ function useFormInput(defaultValue, customStyle) {
     return {
         value,
         onChangeText: (e) => setValue(e),
-        style: customStyle || style.textInput
+        type: "outlined"
     };
 }

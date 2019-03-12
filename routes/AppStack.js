@@ -1,8 +1,18 @@
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import Home from 'containers/home';
+
+import Home from 'containers/Home';
+import Forum from 'containers/Forum';
+import AddNewPage from 'containers/AddNewPage';
+import MyBook from 'containers/MyBook';
+import Settings from 'containers/Settings';
 
 export default createMaterialBottomTabNavigator({
-    Home: { screen: Home }
+    Home: { screen: Home },
+    Forum: { screen: Forum },
+    AddNewPage: { screen: AddNewPage },
+    MyBook: { screen: MyBook },
+    Settings: { screen: Settings }
 }, {
-    initialRouteName: "Home"
+    initialRouteName: 'Home',
+    activeTintColor: '#e5b35b'
 });

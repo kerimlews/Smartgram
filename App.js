@@ -1,15 +1,16 @@
+import React from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import ApolloProvider from 'config/ApolloProvider';
+import ApolloProvider from 'config/apollo-provider';
 
 import AppStack from 'routes/AppStack';
-import AuthStack from 'routes/AuthStack';
-import AuthLoadingScreen from 'routes/AuthLoadingScreen';
+import SignIn from 'containers/SignIn';
+import AuthLoading from 'routes/AuthLoadingScreen';
 
 const switchStackNavigator = createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
+    AuthLoading,
     App: AppStack,
-    Auth: AuthStack,
+    SignIn,
   },
   {
     initialRouteName: 'AuthLoading',
@@ -21,7 +22,7 @@ const Navigation = createAppContainer(switchStackNavigator);
 export default function App() {
   return (
     <ApolloProvider>
-      <Navigation />
+        <Navigation />
     </ApolloProvider>
   );
 }
