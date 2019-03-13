@@ -5,6 +5,7 @@ import ApolloProvider from 'config/apollo-provider';
 import AppStack from 'routes/AppStack';
 import SignIn from 'containers/SignIn';
 import AuthLoading from 'routes/AuthLoadingScreen';
+import Home from 'containers/Home'
 
 const switchStackNavigator = createSwitchNavigator(
   {
@@ -13,7 +14,7 @@ const switchStackNavigator = createSwitchNavigator(
     SignIn,
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'App'
   }
 );
 

@@ -8,7 +8,6 @@ import registerForPushNotificationsAsync from 'config/registerForPushNotificatio
 export default function AuthLoadingScreen({ navigation }) {
 
     const [ isLoadFont , setIsLoadFont ] = useState(true);
-    const [ isAuth , setAuth ] = useState(false);
 
     useEffect(() => {
         loadFont();
@@ -34,29 +33,26 @@ export default function AuthLoadingScreen({ navigation }) {
         {
             ({ data: { checkToken }, loading, error, client }) => {
 
-                if (loading || isLoadFont)
+                if (loading || isLoadFont || checkToken == null)
                         return (
-                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            <View>
                                 <ActivityIndicator />
                                 <StatusBar barStyle="default" />
                             </View>
                         );
                     
                     const isAuth = checkToken != null;
-                    const user = { ...checkToken, __typename: 'user' };
                     
+                    if (!isAuth)
+                        navigation.navigate('SignIn')
+
+                    const user = { ...checkToken, __typename: 'user' };                    
                     const data = { user };
 
                     client.writeData({ data });
-                        console.log(navigation)
-                    if(isAuth)
-                        navigation.navigate('App')
-                    else
-                        navigation.navigate('SignIn')
+                    navigation.navigate('App')
 
                 return null;
-                    
-                    
             }
         }
         </Query>

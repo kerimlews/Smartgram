@@ -7,19 +7,11 @@ import { Provider as PaperProvider } from 'react-native-paper';
 
 export default function Provider({ children }) {
     return (
-        <ApolloProvider client={client} style={style.container}>
+        <ApolloProvider client={client}>
             <PaperProvider>
-                <View style={style.container}>
-                    {children}
-                    <FlashMessage position="top" />
-                </View>
+                {children}
+                <FlashMessage position="top" />
             </PaperProvider>
         </ApolloProvider>
     );
 }
-
-style = StyleSheet.create({
-    container: {
-        marginTop: Platform.OS === 'ios' ? 0 : 25,
-    }
-})
