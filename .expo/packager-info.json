@@ -1,0 +1,9 @@
+{
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://8g-auq.kerimlews.smartgram.exp.direct",
+  "packagerNgrokUrl": "https://packager.8g-auq.kerimlews.smartgram.exp.direct",
+  "ngrokPid": 6076,
+  "devToolsPort": 19002,
+  "packagerPort": 19001,
+  "packagerPid": 20004
+}
