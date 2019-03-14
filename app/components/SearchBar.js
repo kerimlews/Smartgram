@@ -1,12 +1,15 @@
 import React, { useState, Fragment } from 'react';
-import { View, Image, TextInput, TouchableWithoutFeedback, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Image, TextInput, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Query } from 'react-apollo';
+import { Appbar, Text } from 'react-native-paper';
 import { isEmpty } from 'lodash';
 import { SEARCH_USERS } from './queries/search-bar';
+import { withNavigation } from 'react-navigation';
+
 import ShowProfile from './SearcBarComponents/show-profile';
 
-export default function SearchBar() {
+function SearchBar({ navigation }) {
     const [ page, setPage ] = useState(1);
     const [ search, setSearch ] = useState('');
     const [ isOpen, setSearchContent ] = useState(false);
@@ -40,25 +43,29 @@ export default function SearchBar() {
                     </TouchableOpacity>
                 );
 
+                const addPadding = !isOpen ? { paddingLeft: 20, paddingRight: 20 } : null;
                 return (
-                    <Fragment>
-                        <View style={{ flexDirection: 'row', height: 50, marginTop: Expo.Constants.statusBarHeight, width: '100%', backgroundColor: 'black', alignItems: 'center' }}>
-                            { isOpen &&
-                                <TouchableWithoutFeedback onPress={() => setSearchContent(false)}>
-                                    <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-                                        <Ionicons name="md-arrow-back" size={25} color="white" />
+                    <Appbar.Header style={{ backgroundColor: 'transparent' }}>
+                        { !isOpen
+                            ? <Appbar.Action
+                                icon="photo-camera"
+                                color="#599eff"
+                                onPress={this._goBack}
+                            />
+                            : <Appbar.BackAction
+                                onPress={() => setSearchContent(false)}
+                            />
+                        }
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 8, marginBottom: 8, ...addPadding }}>
+                                <View style={{ borderColor: '#d1cfcf', borderWidth: 1, borderTopWidth: 0, borderRadius: 10, height: 40, position: 'relative', alignItems: 'center', flexDirection: 'row', flex: 1 }} >
+                                    <View style={{ position: 'absolute', marginLeft: 20, marginTop: 5 }}>
+                                        <Ionicons name="md-search" size={20} color="gray" />
                                     </View>
-                                </TouchableWithoutFeedback>
-                            }
-                            <View style={{ position: 'relative', alignItems: 'center', flexDirection: 'row', flex: 1 }} >
-                                <View style={{ position: 'absolute', marginLeft: 25, marginTop: 5 }}>
-                                    <Ionicons name="md-search" size={25} color="white" />
-                                </View>
-                                { isOpen
+                                    { isOpen
                                         ?  <TextInput
                                                 autoFocus
                                                 value={search}
-                                                style={{height: 40, borderColor: 'gray', borderBottomWidth: 1, color: 'white', paddingLeft: 65, flex: 1}}
+                                                style={{ color: 'gray', paddingLeft: 45, flex: 1}}
                                                 onChangeText={text => setSearch(text)}
                                                 onFocus={() => {
                                                     setProfile(null);
@@ -66,31 +73,19 @@ export default function SearchBar() {
                                                 placeholder="Search for frends..."
                                             />
                                         :   <TouchableOpacity onPress={() => setSearchContent(true)}>
-                                                <View style={{ height: 40, minWidth: '100%', alignItems: 'flex-start', justifyContent: 'center', borderColor: 'gray', borderBottomWidth: 1, color: 'white'}}>
-                                                    <Text style={{ color: 'white', paddingLeft: 65 }}>Search for frends...</Text>
+                                                <View style={{ minWidth: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Text style={{ color: 'gray', marginLeft: 20 }}>Search for frends...</Text>
                                                 </View>
                                             </TouchableOpacity>
-                                }
+                                    }
+                                </View>
                             </View>
-                        </View>
-                        { isOpen &&
-                            <View style={{ positon: 'absolute', width: '100%', height: '100%' }}>
-                                { isEmpty(profileId) ?
-                                    <FlatList
-                                        data={users}
-                                        refreshing={loading}
-                                        onRefresh={refetch}
-                                        keyExtractor={_keyExtractor}
-                                        renderItem={_renderItem}
-                                    />
-                                    :
-                                    <ShowProfile
-                                        id={profileId}
-                                    />
-                                }
-                            </View>
-                        }
-                    </Fragment>
+                            <Appbar.Action
+                                icon="message"
+                                color="#ffca59"
+                                onPress={() => navigation.navigate('Message')}
+                            />
+                        </Appbar.Header>
                 );
             }
         }
@@ -98,3 +93,5 @@ export default function SearchBar() {
         </Query>
     );
 }
+
+export default withNavigation(SearchBar);

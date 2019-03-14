@@ -1,12 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
+import { Query } from 'react-apollo';
+import Button from 'components/Button';
+import gql from 'graphql-tag';
 
-export default class MyBook extends Component {
-    render() {
-        return (
-            <View>
-                <Text>MyBook</Text>
-            </View>
-        );
-    }
-}
+const PROFILE = gql`
+  {
+      user @client {
+        username,
+        firstName,
+        lastName,
+        email
+      }
+  }
+`;
+
+const MyBook = () => (
+  <Query query={PROFILE}>
+  {({ data: { user: { firstName, lastName, username, email } } }) =>
+      <View>
+        <Text>{lastName}</Text>
+        <Text>{firstName}</Text>
+        <Text>{username}</Text>
+        <Text>{email}</Text>
+      </View>
+  }
+  </Query>
+)
+
+export default MyBook;

@@ -1,7 +1,6 @@
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { createStackNavigator } from 'react-navigation';
 
-import Home from '../app/components/ContentComponents/home';
+import Home from 'containers/Home';
 import Forum from 'containers/Forum';
 import AddNewPage from 'containers/AddNewPage';
 import MyBook from 'containers/MyBook';

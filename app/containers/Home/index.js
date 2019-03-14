@@ -1,13 +1,12 @@
-import React from 'react';
-import { Headline } from 'react-native-paper';
-import { View } from 'react-native';
-
-import style from '../styles/home';
+import React, { Fragment, useState } from 'react';
+import { Headline  } from 'react-native-paper';
+import Search from 'components/SearchBar';
 
 export default function Home() {
     return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <Fragment>
+            <Search />
             <Headline>HOMEEEE</Headline>
-        </View>
+        </Fragment>
     );
 }
