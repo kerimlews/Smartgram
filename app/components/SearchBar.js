@@ -45,6 +45,7 @@ function SearchBar({ navigation }) {
 
                 const addPadding = !isOpen ? { paddingLeft: 20, paddingRight: 20 } : null;
                 return (
+                    <View style={{ height: '100%' }}>
                     <Appbar.Header style={{ backgroundColor: 'transparent' }}>
                         { !isOpen
                             ? <Appbar.Action
@@ -56,8 +57,8 @@ function SearchBar({ navigation }) {
                                 onPress={() => setSearchContent(false)}
                             />
                         }
-                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 8, marginBottom: 8, ...addPadding }}>
-                                <View style={{ borderColor: '#d1cfcf', borderWidth: 1, borderTopWidth: 0, borderRadius: 10, height: 40, position: 'relative', alignItems: 'center', flexDirection: 'row', flex: 1 }} >
+                        <View style={{ flex: 1, height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 8, marginBottom: 8, ...addPadding }}>
+                                <View style={{ borderColor: '#d1cfcf', borderWidth: 1, borderRadius: 10, position: 'relative', alignItems: 'center', flexDirection: 'row', flex: 1 }} >
                                     <View style={{ position: 'absolute', marginLeft: 20, marginTop: 5 }}>
                                         <Ionicons name="md-search" size={20} color="gray" />
                                     </View>
@@ -74,7 +75,7 @@ function SearchBar({ navigation }) {
                                             />
                                         :   <TouchableOpacity onPress={() => setSearchContent(true)}>
                                                 <View style={{ minWidth: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <Text style={{ color: 'gray', marginLeft: 20 }}>Search for frends...</Text>
+                                                    <Text style={{ color: 'gray', marginLeft: 10 }}>Search for frends...</Text>
                                                 </View>
                                             </TouchableOpacity>
                                     }
@@ -86,6 +87,23 @@ function SearchBar({ navigation }) {
                                 onPress={() => navigation.navigate('Message')}
                             />
                         </Appbar.Header>
+                        { isOpen &&
+                            <View style={{ positon: 'absolute', width: '100%', height: '100%' }}>
+                                { isEmpty(profileId) ?
+                                    <FlatList
+                                        data={users}
+                                        refreshing={loading}
+                                        onRefresh={refetch}
+                                        keyExtractor={_keyExtractor}
+                                        renderItem={_renderItem}
+                                    />
+                                    :
+                                    <ShowProfile
+                                        id={profileId}
+                                    />
+                                }
+                            </View>}
+                        </View>
                 );
             }
         }

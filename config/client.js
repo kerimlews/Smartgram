@@ -23,7 +23,7 @@ const authMiddleware = setContext(async (req, { headers }) => {
   };
 });
 
-const ipAddress = '10.45.166.47';
+const ipAddress = '10.45.166.48';
 const uri = `http://${ipAddress}:4000`;
 
 const httpLinkUrl = new HttpLink({ uri });

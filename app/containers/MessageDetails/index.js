@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, FlatList, TextInput, Button } from 'react-native';
 import { Query, Subscription, Mutation } from 'react-apollo';
-import { GET_CONVERSATION, MESSAGE_SUBS, SEND_MESSAGE } from '../../queries/messages';
+import { GET_CONVERSATION, MESSAGE_SUBS, SEND_MESSAGE } from '../queries/messages';
 import ConversationItem from './components/conversation-item';
 
-export default function Conversation({ variables }) {
+export default function MessageDetails({ variables }) {
   const [ message, setMessage ] = useState('');
 
   return (

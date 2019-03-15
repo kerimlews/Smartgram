@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://df-ayx.kerimlews.smartgram.exp.direct",
   "packagerNgrokUrl": "https://packager.df-ayx.kerimlews.smartgram.exp.direct",
-  "ngrokPid": 21628,
+  "ngrokPid": 24776,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 2892
+  "packagerPid": 12696
 }

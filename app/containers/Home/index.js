@@ -10,3 +10,7 @@ export default function Home() {
         </Fragment>
     );
 }
+
+Home.navigationOptions = {
+    header: null,
+};
