@@ -16,6 +16,7 @@ module.exports = function(api) {
                 "components": "./app/components",
                 "containers": "./app/containers",
                 "animations": "./app/animations",
+                "headers": "./app/headers",
                 "styles": "./app/styles",
                 "config": "./config",
                 "assets": "./assets",

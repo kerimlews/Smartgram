@@ -2,7 +2,8 @@ import React, { useState, Fragment } from 'react';
 import { View, Image, TextInput, TouchableWithoutFeedback, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Query } from 'react-apollo';
-import { Appbar, Text } from 'react-native-paper';
+import gql from 'graphql-tag';
+import { Appbar, Text, Badge } from 'react-native-paper';
 import { isEmpty } from 'lodash';
 import { SEARCH_USERS } from './queries/search-bar';
 import { withNavigation } from 'react-navigation';
@@ -14,6 +15,8 @@ function SearchBar({ navigation }) {
     const [ search, setSearch ] = useState('');
     const [ isOpen, setSearchContent ] = useState(false);
     const [ profileId, setProfile ] = useState(null);
+
+    const UNREADED_MESSAGE = gql` { unReadedMeessage }`;
 
     const variables = {
         page,
@@ -45,7 +48,7 @@ function SearchBar({ navigation }) {
 
                 const addPadding = !isOpen ? { paddingLeft: 20, paddingRight: 20 } : null;
                 return (
-                    <View style={{ height: '100%' }}>
+                    <View>
                     <Appbar.Header style={{ backgroundColor: 'transparent' }}>
                         { !isOpen
                             ? <Appbar.Action
@@ -81,11 +84,25 @@ function SearchBar({ navigation }) {
                                     }
                                 </View>
                             </View>
-                            <Appbar.Action
-                                icon="message"
-                                color="#ffca59"
-                                onPress={() => navigation.navigate('Message')}
-                            />
+                            <View style={{position: 'relative'}}>
+                                <Appbar.Action
+                                    icon="message"
+                                    color="#ffca59"
+                                    onPress={() => navigation.navigate('Message')}
+                                />
+                                <Query query={UNREADED_MESSAGE}>
+                                    {
+                                        ({ data: { unReadedMeessage }, loading }) => !loading && unReadedMeessage > 0 &&
+                                            <Badge
+                                                size={17}
+                                                style={{ position: 'absolute', top: 5, right: 5 }}
+                                            >
+                                                {unReadedMeessage}
+                                            </Badge>
+                                    }
+                                </Query>
+                            </View>
+                            
                         </Appbar.Header>
                         { isOpen &&
                             <View style={{ positon: 'absolute', width: '100%', height: '100%' }}>

@@ -12,10 +12,11 @@ export async function signIn(client, requestData) {
     }
 }
 
-export async function signOut() {
+export async function signOut(navigation) {
     try {
         await fetch({ query: `mutation { logout }`});
         await AsyncStorage.removeItem('token');
+        navigation.navigate('SignIn');
     } catch(ex) {
         console.log('Error sign out ', ex);
     }

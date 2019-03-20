@@ -1,7 +1,7 @@
 import { createApolloFetch } from 'apollo-fetch';
 import { AsyncStorage } from 'react-native';
 
-const uri = 'http://10.45.166.68:4000';
+const uri = 'http://10.45.166.50:4000';
 
 export default createApolloFetch({ uri })
   .use(async ({ request, options }, next) => {

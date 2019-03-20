@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import style from 'styles/Messages';
 
-export default function MessageItem({ item, navigation }) {
+export default function MessageItem({ item, navigate }) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(item.id)}>
+    <TouchableOpacity onPress={() => navigate('MessageDetails', { id: item.id })}>
       <View style={style.conversation}>
         <View style={{ position: 'relative', width: 50, height: 50, marginLeft: 20, marginRight: 20 }}>
           <Image

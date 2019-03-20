@@ -4,8 +4,14 @@ import { Query, Subscription, Mutation } from 'react-apollo';
 import { GET_CONVERSATION, MESSAGE_SUBS, SEND_MESSAGE } from '../queries/messages';
 import ConversationItem from './components/conversation-item';
 
-export default function MessageDetails({ variables }) {
+export default function MessageDetails({ navigation }) {
   const [ message, setMessage ] = useState('');
+  const [ page, setPage ] = useState(1);
+
+  const variables = {
+    id: navigation.state.params.id,
+    page
+  };
 
   return (
     <Query query={GET_CONVERSATION} variables={variables}>

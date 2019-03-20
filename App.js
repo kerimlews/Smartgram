@@ -39,7 +39,7 @@ export default function App() {
         {
             ({ data: { checkToken }, loading, error, client }) => {
 
-                if (loading || isLoadFont || checkToken == null)
+                if (loading || isLoadFont)
                         return (
                             <View>
                                 <ActivityIndicator />
