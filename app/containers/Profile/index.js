@@ -2,7 +2,30 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { Query, Mutation } from 'react-apollo';
 import { showMessage } from 'react-native-flash-message';
-import { FIND_USER, START_CONVERSATION } from '../queries/show-profile';
+import gql from 'graphql-tag';
+
+const FIND_USER = gql`
+    query findUser($id: String!) {
+        findUser(id: $id) {
+            id,
+            email,
+            fullName,
+            username,
+            isActive
+        }
+    }
+`;
+
+const START_CONVERSATION = gql`
+    mutation addConversation($user2: String!, $message: String) {
+        addConversation(user2: $user2, message: $message) {
+          id,
+          message,
+          attached
+        }
+    }
+`;
+
 
 const onError = ({ message }) => showMessage({
     message,
@@ -14,8 +37,10 @@ const update = () => showMessage({
     type: 'info'
 });
 
-export default function ShowProfile({ id }) {
-    const variables= { id };
+export default function ShowProfile({ navigation }) {
+    const variables= {
+        id: navigation.state.params.id
+    };
 
     return (
         <Query query={FIND_USER} variables={variables} >

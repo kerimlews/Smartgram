@@ -4,12 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Appbar, Text, Badge } from 'react-native-paper';
+import { withNavigation } from 'react-navigation';
 
 const UNREADED_MESSAGE = gql` { unReadedMeessage }`;
 
-export default function MainHeader({ navigation }) {
+function MainHeader({ navigation }) {
 
-    const CameraButton = (
+    const CameraButton = () => (
         <Appbar.Action
             icon="photo-camera"
             color="#599eff"
@@ -17,7 +18,7 @@ export default function MainHeader({ navigation }) {
         />
     );
 
-    const Search = (
+    const Search = () => (
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
             <View style={{ flex: 1, height: 40, alignItems: 'center', justifyContent: 'center', marginTop: 8, marginBottom: 8, paddingLeft: 20, paddingRight: 20 }}>
                 <View style={{ borderColor: '#d1cfcf', borderWidth: 1, borderRadius: 10, position: 'relative', alignItems: 'center', flexDirection: 'row', flex: 1 }} >
@@ -32,7 +33,7 @@ export default function MainHeader({ navigation }) {
         </TouchableWithoutFeedback>
     );
 
-    const MessageButton = (
+    const MessageButton = () => (
         <View style={{ position: 'relative' }}>
             <Appbar.Action
                 icon="message"
@@ -61,3 +62,4 @@ export default function MainHeader({ navigation }) {
     );
 }
 
+export default withNavigation(MainHeader)
